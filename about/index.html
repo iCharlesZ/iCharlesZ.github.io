@@ -7,28 +7,45 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="Charles Zhang">
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="友链">
-<meta property="og:url" content="http://example.com/links/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:title" content="关于">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="John Doe">
+<meta property="article:published_time" content="2021-12-31T04:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-31T06:13:48.221Z">
+<meta property="article:author" content="Charles Zhang">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>友链 - Hexo</title>
+  <title>关于 - Charles&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -59,7 +76,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>Charles&#39;s blog</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -151,12 +168,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="友情链接">
+            <span class="h2" id="subtitle" title="关于">
               
             </span>
 
@@ -175,72 +192,59 @@
         <div class="py-5" id="board"
           >
           
+            <div class="about-avatar">
+              <img src="/img/avatar.jpg" srcset="/img/loading.gif" lazyload
+                   class="img-fluid" alt="avatar">
+            </div>
+          
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="row links">
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
+<div class="text-center">
+  <div class="about-info">
+    <div class="about-name">Charles Zhang</div>
+    <div class="about-intro"></div>
+    <div class="about-icons">
+      
+        
+        
+        
+        <a href=https://github.com/iCharlesZ class="
+           hint--bottom hint--rounded"
+           aria-label=GitHub
+           target="_blank"
+        >
+          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
           
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Blog"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
+        </a>
+      
+        
+        
+        
+        <a  class="qr-trigger
+           "
+           
+           target="_self"
+        >
+          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
           
-          <div class="link-text">
-            <div class="link-title">Fluid Blog</div>
-            <div class="link-intro">主题博客</div>
-          </div>
-        </div>
-      </a>
+            <img class="qr-img" src="/img/wechat-qr.jpg" srcset="/img/loading.gif" lazyload alt="qrcode" />
+          
+        </a>
+      
     </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Docs"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Docs</div>
-            <div class="link-intro">主题使用指南</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Repo"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Repo</div>
-            <div class="link-intro">主题 GitHub 仓库</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  
+  </div>
 </div>
 
+<article class="about-content page-content mt-5">
+  <div class="markdown-body">
+    
+  </div>
 
-
-
+  
+</article>
 
               </div>
             </div>
@@ -329,6 +333,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
