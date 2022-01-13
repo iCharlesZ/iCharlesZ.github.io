@@ -1,0 +1,508 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="JavaScript中的浅拷贝和深拷贝在JavaScript中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。 这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端知识点整理">
+<meta property="og:url" content="http://example.com/2018/08/02/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="JavaScript中的浅拷贝和深拷贝在JavaScript中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。 这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/08/1-300x100.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/08/2.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/08/3.png">
+<meta property="article:published_time" content="2018-08-02T11:43:32.000Z">
+<meta property="article:modified_time" content="2022-01-13T05:16:32.289Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.zhchi.me/wp-content/uploads/2018/08/1-300x100.png">
+  
+  
+  <title>前端知识点整理 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="前端知识点整理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-08-02 19:43" pubdate>
+        2018年8月2日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      47 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">前端知识点整理</h1>
+            
+            <div class="markdown-body">
+              <h1 id="JavaScript中的浅拷贝和深拷贝"><a href="#JavaScript中的浅拷贝和深拷贝" class="headerlink" title="JavaScript中的浅拷贝和深拷贝"></a>JavaScript中的浅拷贝和深拷贝</h1><p>在JavaScript中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。 这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝</p>
+<span id="more"></span>
+<p>浅拷贝（shallow copy） 拷贝原对象的引用，这是最简单的浅拷贝。</p>
+<p>// 对象<br>var o1 = {a: 1};<br>var o2 = o1;</p>
+<p>console.log(o1 === o2);  // =&gt;true<br>o2.a = 2;<br>console.log(o1.a); // =&gt; 2</p>
+<p>// 数组<br>var o1 = [1,2,3];<br>var o2 = o1;</p>
+<p>console.log(o1 === o2); // =&gt; true<br>o2.push(4);<br>console.log(o1); // =&gt; [1,2,3,4]</p>
+<p>拷贝原对象的实例，但是对其内部的引用类型值，拷贝的是其引用，常用的就是如jquey中的$.extend({}, obj);Array.prototype.slice()和Array.prototype.concat()都会返回一个数组或者对象的浅拷贝，举个例子：</p>
+<p>var o1 = [‘darko’, {age: 22}];<br>var o2 = o1.slice(); // 根据Array.prototype.slice()的特性，这里会返回一个o1的浅拷贝对象</p>
+<p>console.log(o1 === o2); // =&gt; false，说明o2拷贝的是o1的一个实例</p>
+<p>o2[0] = ‘lee’;<br>console.log(o1[0]); // =&gt; “darko” o1和o2内部包含的基本类型值，复制的是其实例，不会相互影响</p>
+<p>o2[1].age = 23;<br>console.log(o1[1].age); // =&gt;23 o1和o2内部包含的引用类型值，复制的是其引用，会相互影响</p>
+<p>可以通过Array.prototype.slice()或jQuery中的$.extend({}, obj)完成对一个数组或者对象的浅拷贝，我们也可以自己写一个简单浅拷贝函数来加深对浅拷贝的理解、</p>
+<p>// 浅拷贝实现，仅供参考<br>function shallowClone(source) {<br>    if (!source  typeof source !== ‘object’) {<br>        throw new Error(‘error arguments’);<br>    }<br>    var targetObj = source.constructor === Array ? [] : {};<br>    for (var keys in source) {<br>        if (source.hasOwnProperty(keys)) {<br>            targetObj[keys] = source[keys];<br>        }<br>    }<br>    return targetObj;<br>}</p>
+<p>深拷贝（deep copy） 深拷贝也就是拷贝出一个新的实例，新的实例和之前的实例互不影响，深拷贝的实现有几种方法，首先我们可以借助jQuery，lodash等第三方库完成一个深拷贝实例。在jQuery中可以通过添加一个参数来实现递归extend，调用$.extend(true, {}, …)就可以实现一个深拷贝。 我们也可以自己实现一个深拷贝的函数，通常有两种方式，一种就是用递归的方式来做，还有一种是利用JSON.stringify和JSON.parse来做，这两种方式各有优劣，先来看看递归的方法怎么做。 jQuery中的extend方法基本的就是按照这个思路实现的，但是没有办法处理源对象内部循环引用的问题，同时对Date，Funcion等类型值也没有实现真正的深度复制，但是这些类型的值在重新定义的时候一般都是直接覆盖，所以也不会对源对象产生影响，从一定程度上来说也算是实现了一个深拷贝。</p>
+<p>// 递归实现一个深拷贝<br>function deepClone(source){<br>   if(!source  typeof source !== ‘object’){<br>     throw new Error(‘error arguments’, ‘shallowClone’);<br>   }<br>   var targetObj = source.constructor === Array ? [] : {};<br>   for(var keys in source){<br>      if(source.hasOwnProperty(keys)){<br>         if(source[keys] &amp;&amp; typeof source[keys] === ‘object’){<br>           targetObj[keys] = source[keys].constructor === Array ? [] : {};<br>           targetObj[keys] = deepClone(source[keys]);<br>         }else{<br>           targetObj[keys] = source[keys];<br>         }<br>      }<br>   }<br>   return targetObj;<br>}<br>// test example<br>var o1 = {<br>  arr: [1, 2, 3],<br>  obj: {<br>    key: ‘value’<br>  },<br>  func: function(){<br>    return 1;<br>  }<br>};<br>var o3 = deepClone(o1);<br>console.log(o3 === o1); // =&gt; false<br>console.log(o3.obj === o1.obj); // =&gt; false<br>console.log(o2.func === o1.func); // =&gt; true</p>
+<p>还有一种实现深拷贝的方式是利用JSON对象中的parse和stringify，JOSN对象中的stringify可以把一个js对象序列化为一个JSON字符串，parse可以把JSON字符串反序列化为一个js对象，通过这两个方法，也可以实现对象的深复制。 我们从下面的例子就可以看到，源对象的方法在拷贝的过程中丢失了，这是因为在序列化JavaScript对象时，所有函数和原型成员会被有意忽略，这个实现可以满足一些比较简单的情况，能够处理JSON格式所能表示的所有数据类型，同时如果在对象中存在循环应用的情况也无法正确处理。</p>
+<p>// 利用JSON序列化实现一个深拷贝<br>function deepClone(source){<br>  return JSON.parse(JSON.stringify(source));<br>}<br>var o1 = {<br>  arr: [1, 2, 3],<br>  obj: {<br>    key: ‘value’<br>  },<br>  func: function(){<br>    return 1;<br>  }<br>};<br>var o2 = deepClone(o1);<br>console.log(o2); // =&gt; {arr: [1,2,3], obj: {key: ‘value’}}</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008637489">https://segmentfault.com/a/1190000008637489</a></p>
+<h1 id="js的数据类型"><a href="#js的数据类型" class="headerlink" title="js的数据类型"></a>js的数据类型</h1><p>6 种基本类型：Boolean、Null、Undefined、Number、String、Symbol (ECMAScript 6 新定义) 引用类型：统称为 Object 类型。 细分的话，有：Object 类型、Array 类型、Date 类型、RegExp 类型、Function 类型 等。</p>
+<h1 id="javascript数据基本类型和引用类型区别"><a href="#javascript数据基本类型和引用类型区别" class="headerlink" title="javascript数据基本类型和引用类型区别"></a>javascript数据基本类型和引用类型区别</h1><h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>1. 基本数据类型的值是不可变的 2. 基本数据类型不可以添加属性和方法 3. 基本数据类型的赋值是简单赋值 如果从一个变量向另一个变量赋值基本类型的值，会在变量对象上创建一个新值，然后把该值复制到为新变量分配的位置上。 4. 基本数据类型的比较是值的比较 5. 基本数据类型是存放在栈区的</p>
+<h2 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h2><p>1. 引用类型的值是可以改变的 2. 引用类型可以添加属性和方法 3. 引用类型的赋值是对象引用 4. 引用类型的比较是引用的比较 5. 引用类型是同时保存在栈区和堆区中的 用类型的存储需要在内存的栈区和堆区共同完成，栈区保存变量标识符和指向堆内存的地址。 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuzhenwei918/p/7443574.html">https://www.cnblogs.com/zhuzhenwei918/p/7443574.html</a>    </p>
+<h1 id="jQuery-extend-函数"><a href="#jQuery-extend-函数" class="headerlink" title="jQuery.extend 函数"></a><strong>jQuery.extend 函数</strong></h1><p>查看jQuery的API Document可以发现，extend方法被挂载在了jQuery和jQuery.fn两个不同对象上，但查看jQuery内部代码实现两者确是相同的，只是功能却不太一样；再查看官方的注释： jQuery.extend(): Merge the contents of two or moreobjects together into the first object.    —-把两个或者更多的对象合并到第一个对象当中。 jQuery.fn.extend():Merge the contents of an object ontothe jQuery prototype to provide new jQuery instance methods.    —-把对象挂载到jQuery的prototype对象上，用以扩展一个新的jQuery实例方法。   简单理解两者区别： jQuery.extend(object):用于将一个或多个对象的内容合并到目标对象。 该函数可以将一个或多个对象的成员属性和方法复制到指定的对象上。 该函数属于全局jQuery对象。   jQuery.fn.extend(object): 函数用于为jQuery扩展一个或多个实例属性和方法(主要用于扩展方法)。 jQuery.fn是jQuery的原型对象，其extend()方法用于为jQuery的原型添加新的属性和方法。这些方法可以在jQuery实例对象上调用。 该函数属于jQuery的原型对象(jQuery.fn)。 <a target="_blank" rel="noopener" href="https://blog.csdn.net/shenlei19911210/article/details/46722375">https://blog.csdn.net/shenlei19911210/article/details/46722375</a>    </p>
+<h1 id="Arguments"><a href="#Arguments" class="headerlink" title="Arguments"></a><strong>Arguments</strong></h1><p>arguments 是一个类似数组的对象, 对应于传递给函数的参数。</p>
+<p>function showargs() {<br>    console.log( arguments );<br>}</p>
+<p>showargs(1,2,3,4,5);</p>
+<p><img src="https://www.zhchi.me/wp-content/uploads/2018/08/1-300x100.png" srcset="/img/loading.gif" lazyload> 这里我们可以看到arguments对象将我传入的五个参数以数组的形式保存在里面，还有保存了我传入函数的实参的个数（length）。 有了这个对象我们以后写函数的时候，就不用给所有的形参指定参数名，然后通过参数名的方式获取参数了，我们可以直接使用arguments对象来获取实参，这样是不是方便了很多呢。 有些语言在我们给函数指定了参数名之后，当调用函数时，会判断当前传入的参数是否与函数定义的参数个数相等，不相等就会报错，但是js并不会验证传递给函数的参数个数是否等于函数定义的参数个数。所以为了装逼（代码的简洁度），我们使用arguments调用参数可以不混淆不同函数之间的参数名。另外为了装逼（代码的严整度），我们也能用arguments来判断当前传入参数的个数是否与我们需要的数量一致。</p>
+<p>function add() {<br>    if( arguments.length == 2 ){<br>        return arguments[0] + arguments[1];<br>    }else{<br>        return ‘传入参数不合法’;<br>    }<br>}</p>
+<p>console.log( add(2,3) );<br>console.log( add(1,2,3) );</p>
+<p><img src="https://www.zhchi.me/wp-content/uploads/2018/08/2.png" srcset="/img/loading.gif" lazyload> 最后我们还可以看到arguments还有一个叫做callee的属性，这个属性是表示的是当前函数的一个引用，简单点说，这个属性里面存储的我们调用的这个函数的代码。</p>
+<p>function showcallee() {<br>    var a = ‘这里是代码’;<br>    var b = ‘这是另一段代码’;<br>    var c = a + b;</p>
+<pre><code>console.log(arguments.callee);
+
+return c;
+</code></pre>
+<p>}<br>showcallee();</p>
+<p><img src="https://www.zhchi.me/wp-content/uploads/2018/08/3.png" srcset="/img/loading.gif" lazyload>  </p>
+<h3 id="arguments的一些妙用"><a href="#arguments的一些妙用" class="headerlink" title="arguments的一些妙用"></a><strong>arguments的一些妙用</strong></h3><p>1.利用arguments实现方法的重载 下面我们利用arguments对象来实现一个参数相加的函数，不论传入多少参数都行，将传入的参数相加后返回。</p>
+<p>function add() {<br>    var len = arguments.length,<br>        sum = 0;<br>    for(;len–;){<br>        sum += arguments[len];<br>    }<br>    return sum;<br>}</p>
+<p>console.log( add(1,2,3) );   //6<br>console.log( add(1,3) );     //4<br>console.log( add(1,2,3,5,6,2,7) );   //26</p>
+<p>由于js是一种弱类型的语言，没有重载机制，当我们重写函数时，会将原来的函数直接覆盖，这里我们能利用arguments，来判断传入的实参类型与数量进行不同的操作，然后返回不同的数值。 2.利用arguments.callee实现递归 先来看看之前我们是怎么实现递归的，这是一个结算阶乘的函数</p>
+<p>function factorial(num) {<br>    if(num&lt;=1) {<br>        return 1;<br>    }else {<br>        return num * factorial(num-1);<br>    }<br>}</p>
+<p>但是当这个函数变成了一个匿名函数时，我们就可以利用callee来递归这个函数。</p>
+<p>function factorial(num) {<br>    if(num&lt;=1) {<br>        return 1;<br>    }else {<br>        return num * arguments.callee(num-1);<br>    }<br>}</p>
+<p>这个方法虽然好用，但是有一点值得注意，ECMAScript4中为了限制js的灵活度，让js变得严格，新增了严格模式，在严格模式中我们被禁止不使用var来直接声明一个全局变量，当然这不是重点，重点是arguments.callee这个属性也被禁止了。 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_16339527/article/details/53231725">https://blog.csdn.net/qq_16339527/article/details/53231725</a> <strong>注意</strong> ES6中的箭头函数没有自己的 arguments 对象，不过在大多数情形下，rest参数可以给出一个解决方案：</p>
+<p>let a;<br>const fn = (…rest) =&gt; Array.prototype.slice.call(rest, 1);<br>a = fn(1, 2); // [2]</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

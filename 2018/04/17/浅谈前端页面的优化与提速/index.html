@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="当今的世界是互联网的世界，IT企业之间的竞争是很激烈的，如果一个网页的加载和显示速度，相比别人的站点页面有那么0.1秒的提升，那也是很大的一个成就。 研究表明：用户最满意的打开网页时间是2-5秒，如果等待超过10秒，99%的用户会关闭这个网页。也许这样讲，各位还不会有太多感触，接下来我列举一组数据：Google网站访问速度每慢400ms就导致用户搜索请 求下降0.59%;Amazon每增加100m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈前端页面的优化与提速">
+<meta property="og:url" content="http://example.com/2018/04/17/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96%E4%B8%8E%E6%8F%90%E9%80%9F/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="当今的世界是互联网的世界，IT企业之间的竞争是很激烈的，如果一个网页的加载和显示速度，相比别人的站点页面有那么0.1秒的提升，那也是很大的一个成就。 研究表明：用户最满意的打开网页时间是2-5秒，如果等待超过10秒，99%的用户会关闭这个网页。也许这样讲，各位还不会有太多感触，接下来我列举一组数据：Google网站访问速度每慢400ms就导致用户搜索请 求下降0.59%;Amazon每增加100m">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/04/17/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96%E4%B8%8E%E6%8F%90%E9%80%9F/a.jpg">
+<meta property="article:published_time" content="2018-04-17T13:10:51.000Z">
+<meta property="article:modified_time" content="2022-01-12T05:40:37.159Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/04/17/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96%E4%B8%8E%E6%8F%90%E9%80%9F/a.jpg">
+  
+  
+  <title>浅谈前端页面的优化与提速 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="浅谈前端页面的优化与提速">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-04-17 21:10" pubdate>
+        2018年4月17日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      78 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">浅谈前端页面的优化与提速</h1>
+            
+            <div class="markdown-body">
+              <p>当今的世界是互联网的世界，IT企业之间的竞争是很激烈的，如果一个网页的加载和显示速度，相比别人的站点页面有那么0.1秒的提升，那也是很大的一个成就。 研究表明：用户最满意的打开网页时间是2-5秒，如果等待超过10秒，99%的用户会关闭这个网页。也许这样讲，各位还不会有太多感触，接下来我列举一组数据：Google网站访问速度每慢400ms就导致用户搜索请 求下降0.59%;Amazon每增加100ms网站延迟将导致收入下降1%;雅虎如果有400ms延迟会导致流量下降5-9%。网站的加载速度严重影响了用户体验，也决定了这个网站的生死存亡。我们来聊聊前端攻城狮如何来提高页面的加载速度。</p>
+<span id="more"></span>
+<p>Web应用通常以网络作为访问前提，而访问者的网络带宽是有限的，所以在单位时间有限的带宽下，访问的资源大小越小则访问的速度必然更快。同时，每请求一个资源都会增加一次HTTP请求，而每个请求也势必会消耗一定的服务器响应时间，因此我们可以从此方向着手进行相关优化。  </p>
+<h4 id="一-缩减资源-HTML、CSS和JavaScript-的大小"><a href="#一-缩减资源-HTML、CSS和JavaScript-的大小" class="headerlink" title="一.缩减资源(HTML、CSS和JavaScript)的大小"></a>一.缩减资源(HTML、CSS和JavaScript)的大小</h4><p>缩减资源大小是指删除不必要的字节（例如，不必要的空格、换行符、缩进和注释）。压缩HTML、CSS和JavaScript可提高下载、解析和执行的速度，提升加载速度。可以通过以下方式进一步缩小文件体积：</p>
+<ul>
+<li>  要缩减HTML的大小，可使用HTML Minifier等类似的工具对HTML文件进行压缩，如果你使用自动化工具，如Gulp，可以使用gulp-htmlmin等插件进行压缩。</li>
+<li>  要缩减CSS的大小，可使用YUI Compressor和cssmin.js等工具，或使用Gulp的gulp-csso等插件进行压缩。</li>
+<li>  要缩减JavaScript的大小，可使用Google Closure Compiler和UglifyJS等工具，同样可以使用Gulp的gulp-uglify等插件进行压缩。</li>
+<li>  最后可以使用Gulp的gulp-concat或gulp-useref等合并插件对CSS和JavaScript进行文件合并处理。</li>
+</ul>
+<p> </p>
+<h4 id="二-优化图片"><a href="#二-优化图片" class="headerlink" title="二.优化图片"></a>二.优化图片</h4><p>尽量减小图片尺寸，以缩减用户等待资源加载的时间。适当地设置图片的格式并进行压缩可以节省大量的数据字节空间。这样可以为那些网络连接较慢的用户节约时间，还可以为有流量套餐限制的用户节省成本。  </p>
+<h4 id="三-减少对服务器的文件请求"><a href="#三-减少对服务器的文件请求" class="headerlink" title="三.减少对服务器的文件请求"></a>三.减少对服务器的文件请求</h4><p>常规的HTTP请求属于“请求”-“应答”-“断开”形式的短连接，每一个独立的资源我们都会向服务器发去一份get请求，再等服务端将我们需要的文件传回来。每一次资源的请求都实实在在地耗费了一次“连接-等待-接收”的时间（当然将http请求设为keep-alive长连接状态可以减少“连接”的次数和时间），如果我们能有效减少对服务器文件的请求次数，便意味着我们可以从这块省下一些页面等待时间，也可以顺便减少服务器的负担。 对于这个解决方案，我们可以这么做： 1. 使用css sprite技术合并多个图片为单个图片文件，实际使用时通过background-position来定位背景位置（相信大家第一个想到的也是这个吧）； 2. 合并多个css样式文件为单个样式文件，合并多个脚本为单个脚本，再在页面中引用合并后的样式/脚本文件。但我个人倒是不怎么推荐这个方法，因为合并了文件之后，多个页面之间公共部分的样式/脚本文件就无法缓存到客户端了； 3. 使用base64编码来展示图片。 4. 将小块的css、js代码段直接写在页面上，而非在页面引入独立的样式/脚本文件。相信有的朋友看惯了“保持结构 （标记）、表现 （样式）、行为 （脚本）三者分离”的规范，对此观点可能有些意见。只能说规范不是教条，适合自己的才是硬道理。直接把小段的、复用率低的样式/脚本直接写于页面上带来的利还是大于弊的（弊可能也就是增大了页面代码量、不那么好维护了点）。反观所有主流门户网站的页面源文件，基本没有一个是把样式/脚本都全部作为外部文件引入的（无论他们是否从减少服务器请求这点出发，事实都是这样），配合gzip压缩会是很好的选择。 5. 利用http-equiv=”expires”元标签，设定一个未来的某时间点作为页面文件过期时间，用户在过期时间之前所获取到的页面文件都仅从缓存中去取。最好的形式是给资源名称加md5之类的唯一标识符后缀，然后设置一段较长的过期时间，同时请后端配置好ETag。  </p>
+<h4 id="四-适度使用CDN"><a href="#四-适度使用CDN" class="headerlink" title="四.适度使用CDN"></a>四.适度使用CDN</h4><p>使用CDN有几个好处：如果用户在其它站点下载过这个CDN资源，那么来我们站点仅仅从缓存获取即可；减少了对自己站点服务器的文件请求（外部CDN的情况下），减少服务器负担；多个域会使浏览器允许异步下载资源的最大数量增多，比如一个站点只从一个域来请求资源，那么FireFox只允许同时刻最多异步下载2个文件，但如果使用了外部CDN来引入资源，那么FF允许在同时异步下载本域中的两个资源外，还额外允许同时异步下载另一个域（CDN）下的2个资源。 但是使用CDN有一个很大的问题——增加了dns解析的开销，如果一个页面同时引入了多个CDN的资源，可能会因为dns解析而陷入较多的等待时间，导致得不偿失。 对于这个问题，常规是建议一个站点下只使用同一个可靠、快速的CDN来引入各种所需资源即可，也就是说，建议一个页面从2个不同的域（比如站点域和CDN域）下来请求资源是最佳的选择。  </p>
+<h4 id="五-减少DNS查找"><a href="#五-减少DNS查找" class="headerlink" title="五.减少DNS查找"></a>五.减少DNS查找</h4><p>当我们在浏览器的地址栏输入网址（譬如： <a target="_blank" rel="noopener" href="http://www.zhchi.me)/">www.zhchi.me）</a> ，然后回车，回车这一瞬间到看到页面到底发生了什么呢？ 域名解析 –&gt; 发起TCP的3次握手 –&gt; 建立TCP连接后发起http请求 –&gt; 服务器响应http请求，浏览器得到html代码 –&gt; 浏览器解析html代码，并请求html代码中的资源（如js、css、图片等） –&gt; 浏览器对页面进行渲染呈现给用户 域名解析是页面加载的第一步，那么域名是如何解析的呢？以Chrome为例：</p>
+<blockquote>
+<p>1.  Chrome浏览器 会首先搜索浏览器自身的DNS缓存（缓存时间比较短，大概只有1分钟，且只能容纳1000条缓存），看自身的缓存中是否有<a target="_blank" rel="noopener" href="http://www.linux178.com/">www.linux178.com</a> 对应的条目，而且没有过期，如果有且没有过期则解析到此结束。<br> 注：我们怎么查看Chrome自身的缓存？可以使用 chrome://net-internals/#dns 来进行查看</p>
+<ol start="2">
+<li><p>如果浏览器自身的缓存里面没有找到对应的条目，那么Chrome会搜索操作系统自身的DNS缓存,如果找到且没有过期则停止搜索解析到此结束.<br>注：怎么查看操作系统自身的DNS缓存，以Windows系统为例，可以在命令行下使用 ipconfig /displaydns 来进行查看 </p>
+</li>
+<li><p> 如果在Windows系统的DNS缓存也没有找到，那么尝试读取hosts文件（位于C:\Windows\System32\drivers\etc），看看这里面有没有该域名对应的IP地址，如果有则解析成功。</p>
+</li>
+<li><p> 如果在hosts文件中也没有找到对应的条目，浏览器就会发起一个DNS的系统调用，就会向本地配置的首选DNS服务器（一般是电信运营商提供的，也可以使用像Google提供的DNS服务器）发起域名解析请求（通过的是UDP协议向DNS的53端口发起请求，这个请求是递归的请求，也就是运营商的DNS服务器必须得提供给我们该域名的IP地址），运营商的DNS服务器首先查找自身的缓存，找到对应的条目，且没有过期，则解析成功。如果没有找到对应的条目，则有运营商的DNS代我们的浏览器发起迭代DNS解析请求，它首先是会找根域的DNS的IP地址（这个DNS服务器都内置13台根域的DNS的IP地址），找打根域的DNS地址，就会向其发起请求（请问<a href="http://www.linux178.com这个域名的IP地址是多少啊？），根域发现这是一个顶级域com域的一个域名，于是就告诉运营商的DNS我不知道这个域名的IP地址，但是我知道com域的IP地址，你去找它去，于是运营商的DNS就得到了com域的IP地址，又向com域的IP地址发起了请求（请问www.linux178.com这个域名的IP地址是多少?）,com域这台服务器告诉运营商的DNS我不知道www.linux178.com这个域名的IP地址，但是我知道linux178.com这个域的DNS地址，你去找它去，于是运营商的DNS又向linux178.com这个域名的DNS地址（这个一般就是由域名注册商提供的，像万网，新网等）发起请求（请问www.linux178.com这个域名的IP地址是多少？），这个时候linux178.com域的DNS服务器一查，诶，果真在我这里，于是就把找到的结果发送给运营商的DNS服务器，这个时候运营商的DNS服务器就拿到了www.linux178.com这个域名对应的IP地址，并返回给Windows系统内核，内核又把结果返回给浏览器，终于浏览器拿到了www.linux178.com对应的IP地址，该进行一步的动作了。">www.linux178.com这个域名的IP地址是多少啊？），根域发现这是一个顶级域com域的一个域名，于是就告诉运营商的DNS我不知道这个域名的IP地址，但是我知道com域的IP地址，你去找它去，于是运营商的DNS就得到了com域的IP地址，又向com域的IP地址发起了请求（请问www.linux178.com这个域名的IP地址是多少?）,com域这台服务器告诉运营商的DNS我不知道www.linux178.com这个域名的IP地址，但是我知道linux178.com这个域的DNS地址，你去找它去，于是运营商的DNS又向linux178.com这个域名的DNS地址（这个一般就是由域名注册商提供的，像万网，新网等）发起请求（请问www.linux178.com这个域名的IP地址是多少？），这个时候linux178.com域的DNS服务器一查，诶，果真在我这里，于是就把找到的结果发送给运营商的DNS服务器，这个时候运营商的DNS服务器就拿到了www.linux178.com这个域名对应的IP地址，并返回给Windows系统内核，内核又把结果返回给浏览器，终于浏览器拿到了www.linux178.com对应的IP地址，该进行一步的动作了。</a></p>
+</li>
+</ol>
+<p>注：一般情况下是不会进行以下步骤的</p>
+<p>如果经过以上的4个步骤，还没有解析成功，那么会进行如下步骤：<br>5.  操作系统就会查找NetBIOS name Cache（NetBIOS名称缓存，就存在客户端电脑中的），那这个缓存有什么东西呢？凡是最近一段时间内和我成功通讯的计算机的计算机名和Ip地址，就都会存在这个缓存里面。什么情况下该步能解析成功呢？就是该名称正好是几分钟前和我成功通信过，那么这一步就可以成功解析。</p>
+<ol start="6">
+<li><p> 如果第5步也没有成功，那会查询WINS 服务器（是NETBIOS名称和IP地址对应的服务器）</p>
+</li>
+<li><p> 如果第6步也没有查询成功，那么客户端就要进行广播查找</p>
+</li>
+<li><p> 如果第7步也没有成功，那么客户端就读取LMHOSTS文件（和HOSTS文件同一个目录下，写法也一样）</p>
+</li>
+</ol>
+<p>如果第八步还没有解析成功，那么就宣告这次解析失败，那就无法跟目标计算机进行通信。只要这八步中有一步可以解析成功，那就可以成功和目标计算机进行通信。</p>
+</blockquote>
+<p>DNS也是开销，通常浏览器查找一个给定域名的IP地址要花费20~120毫秒，在完成域名解析之前，浏览器不能从服务器加载到任何东西。那么如何减少域名解析时间，加快页面加载速度呢？ 当客户端DNS缓存（浏览器和操作系统）缓存为空时，DNS查找的数量与要加载的Web页面中唯一主机名的数量相同，包括页面URL、脚本、样式表、图片、Flash对象等的主机名。减少主机名的 数量就可以减少DNS查找的数量。 减少唯一主机名的数量会潜在减少页面中并行下载的数量（HTTP 1.1规范建议从每个主机名并行下载两个组件，但实际上可以多个），这样减少主机名和并行下载的方案会产生矛盾，需要大家自己权衡。建议将组件放到至少两个但不多于4个主机名下，减少DNS查找的同时也允许高度并行下载。  </p>
+<h4 id="六-延迟请求、异步加载脚本"><a href="#六-延迟请求、异步加载脚本" class="headerlink" title="六.延迟请求、异步加载脚本"></a>六.延迟请求、异步加载脚本</h4><p>在各主流浏览器下，常规情况，我们的脚本文件跟随其它资源文件一样都是异步下载的，但这里存在一个问题——比如FireFox下载好脚本后的一小段时间内会有“执行阻塞”的情况发生，也就是说浏览器下载好脚本后执行它的这段时间里，浏览器的其它行为被阻塞，导致页面上的其它资源都是无法被请求和下载的。 如果你页面里存在js代码执行时间过长的情况，那么用户就会明显感觉到页面的延迟。解决这个问题有一个简单的方法——将脚本请求标签放置到</body>结束标签前，使得页面上的脚本成为最后被请求的资源，自然也不会阻塞其它页面资源的请求事件了。 另外，虽然上面提到“我们的脚本文件跟随其它资源文件一样都是异步下载的”，但异步下载不代表异步执行，为了严格保证脚本逻辑顺序和依赖关系的正确性，浏览器会按照脚本被请求的先后顺序来执行脚本。那么问题就来了——如果页面上的脚本依赖关系并不大，甚至没有任何相互间的依赖，那么浏览器的这套规则就仅仅增加了页面请求阻塞时间而已）。 解决这个问题的办法无非就是让脚本无阻塞地异步执行，比如给script标签加上defer和async属性或者动态注入脚本，但这些都不是良好的解决方案，要么存在兼容性问题，要么太麻烦还无法处理依赖。 个人是推荐使用 requireJS（AMD规范） 或 seaJS（CMD规范） 来异步加载脚本并处理模块依赖的，前者将“依赖前置”（预加载所有被依赖脚本模块，执行速度最快），后者走的“依赖就近”（懒加载被依赖脚本模块，请求脚本更科学），你可以根据项目具体需求来选择最合适的。  </p>
+<h4 id="七-首屏加载优化"><a href="#七-首屏加载优化" class="headerlink" title="七.首屏加载优化"></a>七.首屏加载优化</h4><p>先解释下，“首屏”指的是页面初始化时候的页面内容显示区域，也就是页面一加载，用户就首先看到的区域。 如果所需的数据量超出初始拥塞窗口(Congestion Window)的限制，系统就需要在服务器和用户浏览器之间进行更多次的往返。如果用户使用的是延迟时间较长的网络（例如，移动网络），该问题会严重延迟网页的加载。 我们可以这样实现此方案，不依赖任何lazyload库，拿图片来做示范，我们可以这样编写首屏外的图片（假设某张图片地址是a.jpg）的img标签：</p>
+<img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" srcset="/img/loading.gif" lazyload data-src="a.jpg">
+
+<p>如上所示，页面初步加载这张图片的时候是直接以base64的方式（当然你也可以统一使用一张占位图loading.gif来替代）来快速显示一张极小的图片的，而图片本身的真实路径是存在data-src属性内的，我们可以在页面加载结束后再向服务器请求它真实的文件并替换：</p>
+<p>function init() {<br>    var imgDefer = document.getElementsByTagName(‘img’);<br>    for (var i=0; i&lt;imgDefer.length; i++) {<br>        if(imgDefer[i].getAttribute(‘data-src’)) {<br>             imgDefer[i].setAttribute(‘src’,imgDefer[i].getAttribute(‘data-src’));<br>        }<br>    }<br>}<br>window.onload = init;</p>
+<p>如上是对图片的延迟加载处理，对于视频、音频文件，可以采取完全一样的原理来延迟加载，从而有效减少页面初始化等待时间。 <strong>结构化HTML，以便首先加载关键的首屏内容</strong> 应考虑首先加载网页的主要内容。结构化网页，以便服务器发出的初始响应能发送必要数据，从而迅速呈现网页的关键部分并暂缓呈现其余部分。如果可能，你应该将CSS拆分为两个部分：页面的主要内容（例如，文章、产品和描述内容），以及可暂缓呈现的部分（例如，评论、广告和第三方小部件）。可以参考以下示例，了解有关如何结构化网站以提高加载速度：</p>
+<ul>
+<li>  如果你的网站采用的是两列布局（如文章加侧边栏），而HTML先加载边栏，再加载文章，应考虑首先加载文章。</li>
+</ul>
+<p> </p>
+<h4 id="八-将样式表放在头部"><a href="#八-将样式表放在头部" class="headerlink" title="八.将样式表放在头部"></a>八.将样式表放在头部</h4><p>首先说明一下，将样式表放在头部对于实际页面加载的时间并不能造成太大影响，但是这会减少页面首屏出现的时间，使页面内容逐步呈现，改善用户体验，防止“白屏”。 我们总是希望页面能够尽快显示内容，为用户提供可视化的回馈，这对网速慢的用户来说是很重要的。 将样式表放在文档底部会阻止浏览器中的内容逐步出现。为了避免当样式变化时重绘页面元素，浏览器会阻塞内容逐步呈现，造成“白屏”。这源自浏览器的行为：如果样式表仍在加载，构建呈现树就是一种浪费，因为所有样式表加载解析完毕之前务虚会之任何东西  </p>
+<h4 id="九-将脚本放在底部"><a href="#九-将脚本放在底部" class="headerlink" title="九.将脚本放在底部"></a>九.将脚本放在底部</h4><p>跟样式表相同，脚本放在底部对于实际页面加载的时间并不能造成太大影响，但是这会减少页面首屏出现的时间，使页面内容逐步呈现。 js的下载和执行会阻塞Dom树的构建（严谨地说是中断了Dom树的更新），所以script标签放在首屏范围内的HTML代码段里会截断首屏的内容。 下载脚本时并行下载是被禁用的——即使使用了不同的主机名，也不会启用其他的下载。因为脚本可能修改页面内容，因此浏览器会等待；另外，也是为了保证脚本能够按照正确的顺序执行，因为后面的脚本可能与前面的脚本存在依赖关系，不按照顺序执行可能会产生错误。  </p>
+<h4 id="十-避免CSS表达式"><a href="#十-避免CSS表达式" class="headerlink" title="十.避免CSS表达式"></a>十.避免CSS表达式</h4><p>如果要动态设置CSS属性，CSS表达式（CSS expressions）就显得尤其强（wei）大（xian），它在IE5.0中开始被支持，但又在IE8.0中被废弃。 减少CSS表达式执行次数的方法是：当页面渲染完成后就给CSS属性设定一个明确的值，或者在Js中监听网页事件，事件触发时再去设置CSS属性值。如果一定要使用CSS表达式，请记住，它很可能会被执行成千上万次。  </p>
+<h4 id="十一-减少DOM操作"><a href="#十一-减少DOM操作" class="headerlink" title="十一.减少DOM操作"></a>十一.减少DOM操作</h4><p>如果一个页面太复杂，意味着下载时间更长，同时JS访问DOM的速度也会变慢。减少DOM数并不意味着需要移除内容，而是我们可以使用更合理的HTML标签。 记住，DOM操作是非常损耗性能的。  </p>
+<h4 id="十二-避免重定向"><a href="#十二-避免重定向" class="headerlink" title="十二.避免重定向"></a>十二.避免重定向</h4><p>当页面发生了重定向，就会延迟整个HTML文档的传输。在HTML文档到达之前，页面中不会呈现任何东西，也没有任何组件会被下载。由于重定向会触发额外的HTTP请求响应周期，并会额外延长往返时间延迟，因此，将应用发出的重定向数量降至最低至关重要。避免HTTP重定向可以缩减用户等待网页加载的时间。 <strong>一些建议</strong> 如果你的网页需要针对桌面版与移动版浏览器提供不同的展现方式，建议优先使用响应式网页设计，自然就可以避免网页重定向了。 <strong>如果你的网页明确要求进行重定向，你应该执行以下两项操作：</strong></p>
+<ul>
+<li>  使用HTTP重定向将使用移动版浏览器的用户直接发送到对应的移动版网址，而不执行任何中间的重定向；</li>
+<li>  并且在你的桌面版网页中加入 &lt;link rel=“alternate”&gt;标记来识别对应的移动版网址，以便搜索引擎“蜘蛛程序”能够找到你的移动版网页。</li>
+</ul>
+<h3 id="十三-使用浏览器缓存"><a href="#十三-使用浏览器缓存" class="headerlink" title="十三.使用浏览器缓存"></a><strong>十三.使用浏览器缓存</strong></h3><p>如果用户会多次访问你的网站，那么静态资源的浏览器缓存可以节省用户的时间。缓存标头应当应用到所有可缓存的静态资源中，而不仅仅是应用到一小部分静态资源（例如，图片）中。可缓存的资源包括JS和CSS文件、图像文件及其他二进制对象文件（媒体文件和PDF文件等）。通常情况下，HTML不是静态资源，默认情况下不应被视为可缓存资源。你应考虑哪些缓存策略适用于你的网站。 为你的服务器启用浏览器缓存。静态资源应该至少有一周的缓存有效期。广告或小部件这类的第三方资源也应该至少有一天的缓存有效期。对于所有可缓存资源，建议进行以下设置：</p>
+<ul>
+<li>  将 Expires设为将来日期，至少为一周，最多为一年（推荐优先设置 Expires，而不设置 Cache-Control: max-age，因为前者受支持的范围更为广泛）。应避免将其设为超过一年的将来日期，因为这样就违反了RFC准则。</li>
+<li>  如果你知道资源将具体在何时发生变化，则可以设置较短的过期日期。然而，如果你认为资源“可能将要发生变化”，但又不知道具体时间，则应设置较长的过期日期，并在资源文件名中使用文件指纹（下面会讲到）。</li>
+</ul>
+<p><strong>Expires和Cache-Control: max-age标头</strong> 这些标头用于指定相应时间段，浏览器可在指定的这段时间内使用已缓存的资源，而无需查看网络服务器是否提供了新版资源。这些缓存标头功能强大，没有任何应用条件限制。在设置这些标头并下载资源后，浏览器不会为资源发出任何GET请求，除非过期日期到期或达到时间最大值，亦或是用户清除了缓存。 <strong>Last-Modifed和ETag标头</strong> 这些标头可用于指定浏览器应如何确定用于缓存的文件是否相同。在 Last-Modified标头中指定的是日期，而在 ETag标头中指定的则可以是唯一标识资源的任意值（通常为文件版本或内容哈希值）。 Last-Modified是功能“较弱”的缓存标头，因为浏览器会使用试探法来确定是否需要从缓存中抓取内容。 借助这些标头，浏览器可以通过在用户明确重新加载页面时发出条件式GET请求，有效地更新其已缓存资源。除非你在服务器端更改资源，否则条件式GET请求不会返回完整的响应，因此相较于完整GET请求，此类请求的延迟较小。 <strong>应该使用哪个缓存标头？</strong> 对于所有可缓存资源，指定一个 Expires或 Cache-Control: max-age以及一个 Last-Modified或 ETag至关重要。你没必要同时指定 Expires和 Cache-Control: max-age，或同时指定 Last-Modified和 ETag。下列代码示例了如何在Nginx中为静态资源配置浏览器缓存：</p>
+<p>location ~ \.(cssjspngjpgjpeggifbmpwebpsvgxmljsonmp3wavmp4pdfswfzip)$ {<br>    # 设置相关静态资源过期和缓存时间为一年<br>    expires 31536000s;<br>    add_header Pragma “public”;<br>    add_header Cache-Control “max-age=31536000, public”;<br>}</p>
+<p><strong>使用文件指纹</strong> 对于偶尔发生变化的资源，我们可以让浏览器缓存相应的资源，直到该资源在服务器上出现变化，而服务器则在此时通知浏览器有新版本可用。我们可以通过为每个版本的资源指定一个唯一网址来实现这一目的。例如，假定我们有一个名为 my_stylesheet.css的资源。我们可以将文件重命名为 my_stylesheet_40dfc26.css。当资源发生变化时，其指纹就会发生变化，对应的网址也会随之更改。网址一经更改，系统就会强制浏览器重新抓取资源。通过指纹，我们甚至可以为变化更为频繁的资源设置一个最大的过期日期。 指纹识别的常用方法是使用对文件内容的哈希值进行编码的128位十六进制数。你可以使用Gulp自动化工具的gulp-rev和gulp-rev-replace等相关插件进行自动化添加文件指纹。 另一个策略是直接为新版应用创建新版目录，然后为版本目录中的各个版本放置所有资源。这样做的缺点是，如果各个版本中的资源未发生变化，则其网址将仍会更改以强制重新下载。使用内容哈希值不会遇到该问题，但这种方法稍微复杂一些。  </p>
+<h4 id="十四-使用cookie-free的独立域名"><a href="#十四-使用cookie-free的独立域名" class="headerlink" title="十四.使用cookie-free的独立域名"></a>十四.使用cookie-free的独立域名</h4><p>当浏览器向服务器请求一张静态的图片前,会先发送同域名下的 cookie，服务器对于这些 cookie 不会做任何处理。因此它们只是在毫无意义的消耗带宽。所以你应该确保对于静态内容的请求是无coockie的请求。将静态资源部署到一个独立的无Cookie(cookie-free)的域名，可以避免不必要的Cookie流量，同时还能在某些浏览器上提升资源请求的并发连接数。 下列代码示例了如何在Nginx中为静态资源设置cookie-free：</p>
+<p>location ~ \.(cssjspngjpgjpeggifbmpwebpsvgxmljsonmp3wavmp4pdfswfzip)$ {<br>    # 为相关静态资源设置cookie-free<br>    fastcgi_hide_header Set-Cookie;<br>    tcp_nodelay off;<br>    break;<br>}</p>
+<p>  <strong>最后还有一些建议</strong> 不要在css中使用@import，它会让一个样式文件去等待另一个样式文件的请求，无形中增加了页面等待时间。 减少无效请求，请求一个不存在的资源，会导致较长的等待和阻塞。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">我的博客</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/04/24/h5%E5%AE%9E%E7%8E%B0alpha%E9%80%9A%E9%81%93%E8%A7%86%E9%A2%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">H5实现alpha通道视频</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/02/25/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BF%9D%E5%AD%98%E5%AF%86%E7%A0%81/">
+                        <span class="hidden-mobile">数据库如何正确保存密码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

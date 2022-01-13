@@ -1,0 +1,584 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="原文出处： tylerneylon   译文出处：defsniky （@i小雨生） -- 单行注释–[[    [多行注释]–]]    变量 &amp; 控制流     num &#x3D; 23 – 数字都是双精度str &#x3D; ‘aspythonstring’ – 像 Python 一样不可变str &#x3D; “aspythonuse” – 可以双引号str &#x3D; [[        像 Python 的多行注释">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua快速入门">
+<meta property="og:url" content="http://example.com/2017/10/30/lua%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="原文出处： tylerneylon   译文出处：defsniky （@i小雨生） -- 单行注释–[[    [多行注释]–]]    变量 &amp; 控制流     num &#x3D; 23 – 数字都是双精度str &#x3D; ‘aspythonstring’ – 像 Python 一样不可变str &#x3D; “aspythonuse” – 可以双引号str &#x3D; [[        像 Python 的多行注释">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-30T01:10:30.000Z">
+<meta property="article:modified_time" content="2022-01-12T05:40:37.121Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Lua快速入门 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Lua快速入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-10-30 09:10" pubdate>
+        2017年10月30日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      36 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Lua快速入门</h1>
+            
+            <div class="markdown-body">
+              <p>原文出处： <a target="_blank" rel="noopener" href="http://tylerneylon.com/a/learn-lua/">tylerneylon</a>   译文出处：<a target="_blank" rel="noopener" href="http://defsniky.com/posts/2014-06-05-learn-lua-in-15-minutes.html">defsniky （@i小雨生）</a></p>
+<p>-- 单行注释<br>–[[<br>    [多行注释]<br>–]]</p>
+<hr>
+<ul>
+<li><ol>
+<li>变量 &amp; 控制流</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p>num = 23 – 数字都是双精度<br>str = ‘aspythonstring’ – 像 Python 一样不可变<br>str = “aspythonuse” – 可以双引号<br>str = [[<br>        像 Python 的多行注释可用于<br>        表示多行字符串一样<br>        方便<br>    ]]</p>
+<p>bol = nil – 未定义；支持垃圾回收</p>
+<span id="more"></span>
+<p>-- 缩进只为易读性，像 Matlab 一样以 end 结尾<br>while num &lt; 50 do<br>    num = num + 1 – 没有 ++ 或 += 自增操作符号<br>end</p>
+<p>– IF 条件开关<br>if num &gt; 40 then<br>    print(‘&gt; 40’)<br>elseif s ~= ‘aspython’ then – ~= 表示 !=<br>    io.write(‘s is not aspython’) – 风骚的标准输出<br>else<br>    thisIsGlobal = 5 – 驼峰式命名<br>    – 显示声明局部变量（像 Javascript 一样）<br>    local line = io.read()</p>
+<pre><code>-- .. 作为字符串连接符
+print(&#39;凛冬将至&#39; .. line)
+</code></pre>
+<p>end</p>
+<p>– 引用未定义变量将返回 nil ，这不是错误<br>foo = anUnknownVariable  – 等价于 foo = nil</p>
+<p>aBoolValue = false<br>– 只有 nil 与 false 为逻辑假； 数字 0 与空字串 ‘’ 为真！<br>if not aBoolValue then print(‘false’) end</p>
+<p>– 像 Python 一样运用 ‘or’ 和 ‘and’<br>– 得到 C 语言中 a ? b : c 的效果；需注意 b = false 或 nil 的情况<br>ans = aBoolValue and ‘yes’ or ‘no’</p>
+<p>karlSum = 0<br>for i = 1, 100 do – 像 Matlab 一样的递增语法，包括两端，如同数学中[1, 100]<br>    karlSum = karlSum + i<br>end</p>
+<p>– Step 为 2 递减的方式 ‘100, 1, -2’<br>for j = 100, 1, -2 then print(j) end</p>
+<p>– 综上，范围可表示为 “begin, end [, step]“</p>
+<p>– 另一个循环控制<br>num = 23<br>repeat<br>    print(‘凡人必有一死’)<br>    num = num - 1<br>until num == 0</p>
+<hr>
+<ul>
+<li><ol start="2">
+<li>函数</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p>function fib(n)<br>    if n &lt; 2 then return 1 end<br>    return fib(n - 2) + fib(n - 1)<br>end</p>
+<p>– Javascript 一样的匿名函数与闭包<br>function adder(x)<br>    – 返回一个函数<br>    – 闭包内封存 x 值<br>    return function (y) return x + y end<br>end<br>a1 = adder(9)<br>a2 = adder(36)<br>print(a1(16))  –&gt; 25<br>print(a2(64))  –&gt; 100</p>
+<p>– 遇到不匹配的列表长度时<br>– 过长的变量将被赋予 nil<br>– 过长的值将被忽略</p>
+<p>x, y, z = 1, 2, 3, 4 – 4 将被忽略<br>function bar(a, b, c)<br>    print(a, b, c)<br>    return 4, 8, 15, 16, 23, 42<br>end<br>x, y = bar(‘zaphod’)  –&gt; “zaphod  nil nil”<br>– x = 4, y = 8, 其余值被忽略</p>
+<p>– 函数与其他类型一样为一等公民<br>– 同样有 local/global 之分<br>– 像 Javascript 一样定义<br>function f(x) return x * x end<br>f = function (x) return x * x end</p>
+<p>print ‘Hello World!’ – 只有一个`字符串`参数时可省略括号</p>
+<hr>
+<ul>
+<li><ol start="3">
+<li>表(Table) </li>
+</ol>
+</li>
+</ul>
+<hr>
+<p>– 表是 Lua 中唯一的复合类型<br>– 像 PHP 中的数组或 Javascript 中的 Object 一样<br>– 可用作 list/dict/map</p>
+<p>– 默认以字符串作为 key<br>t = {key1 = ‘value1’, key2 = false}<br>– 像 Javascript 一样以 . 取值<br>print(t.key1) –&gt; “value1”<br>t.key3 = {} – 加入新的键值对<br>t.key2 = nil – 销毁一组键值对</p>
+<p>– 理论上任何非 nil 的变量都可以作为 key<br>u = {[‘@!#’] = ‘qbert’, [{}] = 1729, [6.28] = ‘tau’}<br>print(u[6.28])  –&gt; “tau”<br>a = u[‘@!#’] – a = ‘qbert’<br>b = u[{}] – b = nil；像 Javascript 一样 {} 会创建新的对象<br>          – 因此不要用蛋疼的 key 值，老老实实用字串或数字</p>
+<p>– 同字符串一样，只有一个表作为函数的参数时可以省略括号<br>– 为了一个括号增加阅读难度，得不偿失<br>function h(x) print(x.key1) end<br>h{key1 = ‘Sonmi<del>451’}  –&gt; “Sonmi</del>451”</p>
+<p>for key, val in pairs(u) do  – 像 Python  一样的键值迭代<br>    print(key, val)<br>end</p>
+<p>– 像 Javascript 一样的全局作用域 _G<br>print(_G[‘_G’] == _G) –&gt; true</p>
+<p>– 省略 key 之后即可变身为 list<br>– 实际上是以递增自然数为 key<br>v = {‘value1’, ‘value2’, 1.21, ‘gigawatts’}<br>for i = 1, #v do  – 像 Bash 一样，#v 表示列表长度<br>    print(v[i])  – 像 Matlab 一样，列表索引从 1 开始<br>end</p>
+<hr>
+<ul>
+<li>3.1 Metatables &amp; metamethods</li>
+</ul>
+<hr>
+<p>– 元表(metatable)就是表的表，像 Javascript 的原型(prototype)一样<br>– 为表重载一些元方法(metamethods)</p>
+<p>f1 = {a = 1, b = 2}<br>f2 = {a = 2, b = 3}<br>– s = f1 + f2 为错</p>
+<p>mm = {}<br>function mm.__add(x, y)<br>  sum = {}<br>  sum.a = x.a + y.a<br>  sum.b = x.b + y.b<br>  return sum<br>end</p>
+<p>setmetatable(f1, mm)<br>setmetatable(f2, mm)</p>
+<p>– 实际调用 f1 的 metatable 中的 __add(f1, f2)<br>– 只为 f1 设置元表也可以<br>s = f1 + f2 – s = {a = 3, b = 5}</p>
+<p>– s2 = s + s 为错，s 未定义元表</p>
+<p>– __index 元方法重载表中 key 的提取符号 `.`<br>defaultFavs = {animal = ‘gru’, food = ‘donuts’}<br>myFavs = {food = ‘pizza’}<br>setmetatable(myFavs, {__index = defaultFavs})<br>food = myFavs.food</p>
+<p>– Lua 中的值都具有元方法，只有 Table 可以重载<br>– 所有元方法如下</p>
+<p>– __add(a, b)                     for a + b<br>– __sub(a, b)                     for a - b<br>– __mul(a, b)                     for a * b<br>– __div(a, b)                     for a / b<br>– __mod(a, b)                     for a % b<br>– __pow(a, b)                     for a ^ b<br>– __unm(a)                        for -a<br>– __concat(a, b)                  for a .. b<br>– __len(a)                        for #a<br>– __eq(a, b)                      for a == b<br>– __lt(a, b)                      for a &lt; b<br>– __le(a, b)                      for a &lt;= b<br>– __index(a, b)  <fn or a table>  for a.b<br>– __newindex(a, b, c)             for a.b = c<br>– __call(a, …)                  for a(…)</p>
+<hr>
+<ul>
+<li>3.2 类风格的 Table 与继承</li>
+</ul>
+<hr>
+<p>– 像 Javascript 一样并没有内置 Class<br>– 但可以通过 Table `{}` 实现</p>
+<p>Dog = {}                                – 1.<br>function Dog:new()                      – 2.<br>    newObj = {sound = ‘woof’}           – 3.<br>    self.__index = self                 – 4.<br>    return setmetatable(newObj, self)   – 5.<br>end<br>function Dog:makeSound()                – 6.<br>    print(‘I say ‘ .. self.sound)<br>end</p>
+<p>mrDog = Dog:new()                       – 7.<br>mrDog:makeSound() –&gt; “I say woof”</p>
+<p>– 1. Dog 像类但实际是 Table<br>– 2. Dog:new(…) := Dog.new(self, …)<br>– 3. newObj 作 Dog 的实例<br>– 4. self 是 Lua 中默认的参数，在这里 self = Dog<br>–    继承的时候可以改变<br>–    self.__index 与 self 的元方法 __index 不是一回事<br>–    self = {__index = self, metatable = {__index = …}}<br>– 5. setmetatable(newObj, self) 相当于 setmetatable(newObj, {__index = self})<br>–    赋予实例所有类方法<br>– 6. 同 2.<br>– 7. mrDog = Dog.new(Dog)</p>
+<p>– 继承<br>LoudDog = Dog:new()<br>function LoudDog:makeSound()<br>    s = self.sound .. ‘ ‘<br>    print(s .. s .. s)<br>end<br>seymour = LoudDog:new()<br>seymour:makeSound() –&gt; “woof woof woof”</p>
+<hr>
+<ul>
+<li><ol start="4">
+<li>模块</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p>– 以下来自文件 mod.lua<br>local M = {}</p>
+<p>local function sayMyName()<br>    print(‘Hrunkner’)<br>end</p>
+<p>function M.sayHello()<br>    print(‘Why hello there’)<br>    sayMyName()<br>end<br>return M<br>– 以上<br>– 回到主文件<br>local mod = require(‘mod’) – 运行 mod.lua 中的代码<br>– 操作同下<br>local mod = (function()<br>    – 像 Javascript 一样<br>    –[[<br>        mod.lua 中的代码<br>    ]]–<br>end)()</p>
+<p>mod.sayHello() –&gt; “Why hello there”<br>mod.sayMyName() –&gt; 错！sayMyName() 是 mod.lua 中的局部变量</p>
+<p>– require 返回的值将被缓存<br>– 即使多次调用 require 被调用文件也只运行一次</p>
+<p>– mod2.lua 包含 print(“mod2”)<br>local a = require(“mod2”) –&gt; “mod2”<br>local b = require(“mod2”) – 不输出， 实际为 b = a</p>
+<p>– dofile 是不缓存的版本的 require<br>dofile(“mod2”) –&gt; “mod2”<br>dofile(“mod2”) –&gt; “mod2”</p>
+<p>– loadfile 读取文件但不执行<br>– 勘误：f = loadfile(‘mod2’)，需加后缀名，否则找不到文件<br>f = loadfile(‘mod2.lua’)<br>f() –&gt; “mod2”</p>
+<p>– loadstring 读取代码字符串<br>f = loadstring(“print(‘Lua is cool!’)”)<br>f() –&gt; “Lua is cool!”</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">我的博客</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/10/30/html5-notification-api/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTML5 桌面通知：Notification API</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/10/20/jquery-cropper%E4%B8%AD%E6%96%87api%E8%AF%A6%E8%A7%A3/">
+                        <span class="hidden-mobile">jQuery.cropper中文API详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

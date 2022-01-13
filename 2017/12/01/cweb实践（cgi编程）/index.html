@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是CGI？CGI（The Common Gateway Interface）：通用网关接口，定义web服务器和客户脚本进行信息交互的一系列标准。 为了了解CGI的概念，让我们来看看当我们单击一个超链接来浏览一个特定的web页或URL的时候，背后会发生什么事？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++web实践（CGI编程）">
+<meta property="og:url" content="http://example.com/2017/12/01/cweb%E5%AE%9E%E8%B7%B5%EF%BC%88cgi%E7%BC%96%E7%A8%8B%EF%BC%89/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="什么是CGI？CGI（The Common Gateway Interface）：通用网关接口，定义web服务器和客户脚本进行信息交互的一系列标准。 为了了解CGI的概念，让我们来看看当我们单击一个超链接来浏览一个特定的web页或URL的时候，背后会发生什么事？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/0_1329878110TxXs-300x108.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151046-300x130.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151341-300x134.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151743-270x300.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151804-222x300.png">
+<meta property="article:published_time" content="2017-12-01T07:24:42.000Z">
+<meta property="article:modified_time" content="2022-01-12T05:40:37.148Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.zhchi.me/wp-content/uploads/2017/12/0_1329878110TxXs-300x108.png">
+  
+  
+  <title>C++web实践（CGI编程） - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="C++web实践（CGI编程）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-12-01 15:24" pubdate>
+        2017年12月1日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++web实践（CGI编程）</h1>
+            
+            <div class="markdown-body">
+              <p>什么是CGI？CGI（The Common Gateway Interface）：通用网关接口，定义web服务器和客户脚本进行信息交互的一系列标准。 为了了解CGI的概念，让我们来看看当我们单击一个超链接来浏览一个特定的web页或URL的时候，背后会发生什么事？</p>
+<span id="more"></span>
+<p>在进行网页浏览时，通常就是通过一个URL请求一个网页，然后服务器返回这个网页文件给浏览器。浏览器在本地解析该文件渲染成我们看到的网页。然而通常我们看到的网页不是静态网页，也就是说在服务端是没有这个网页文件，它是在网页请求的时候动态生成的，比如PHP/JSP网页。依据你请求的参数不同，所返回的内容不同。 同理，如果是请求一个CGI程序的时候（比如在浏览器直接输入CGI程序的URL，或者提交表单的时候发送给CGI程序），CGI程序负责解析从前端传递过来的参数，理解它的意图然后返回数据，比如返回HTML、XML或JSON等。 CGI（The Common Gateway Interface）是一个标准化的协议，能够使应用程序（通常称为CGI程序或CGI脚本）同web服务器和客户端进行交互。CGI程序能够用Python, PERL, Shell, C or C++等语言来实现。 在PHP和Java大行其道的今天，很多人看来用C++编写CGI是几乎淘汰的技术了（其实这到不然，只是比较小众罢了）。所以如果你对C/C++感兴趣或者对历史感兴趣都可以继续阅读下去。 下图简单的展示了CGI程序架构 <img src="https://www.zhchi.me/wp-content/uploads/2017/12/0_1329878110TxXs-300x108.png" srcset="/img/loading.gif" lazyload> 在你着手写CGI程序之前，确保你的web服务器支持CGI程序并且配置成处理CGI程序。所有的能够被HTTP服务器执行的CGI程序都被存放在预先配置好的目录下面，这个目录叫做CGI目录，并且按照约定命名为 /var/www/cgi-bin，并且约定CGI文件的后缀名为.cgi ，尽管它们是c++可执行文件。 一般的，Apache 服务器在/var/www/cgi-bin目录下配置文件来运行CGI程序，如果你想要声明另外的目录来运行CGI脚本，你需要修改httpd.conf 文件中的部分内容：</p>
+<p>&lt;Directory “/var/www/cgi-bin”&gt;<br>    AllowOverride None<br>    Options ExecCGI<br>    Order allow,deny<br>    Allow from all<br></Directory></p>
+<p>&lt;Directory “/var/www/cgi-bin”&gt;<br>    Options All<br></Directory></p>
+<p>配置好之后。就可以用C/C++编程了！ 第一步：我们编写一个这样的文件</p>
+<p>#include&lt;stdio.h&gt;<br>int main(int args ,char * argv []) {</p>
+<pre><code>printf(&quot;Content-type:text/html\\n\\n&quot;);
+printf(&quot;hello world ! 我是cgi &quot;);
+getchar();
+</code></pre>
+<p>  return 0;<br>}</p>
+<p>编译，生成一个这样的 hello.exe文件、生成之后，我们将hell.exe的属性改为 hello.cgi，然后将其放置到，自己安装的Apache server文件中的cgi-bin文件下，在浏览器中，再输入<a target="_blank" rel="noopener" href="http://localhost/cgi-bin/hello.cgi">http://localhost/cgi-bin/hello.cgi</a>  就可以看到这样的画面   <img src="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151046-300x130.png" srcset="/img/loading.gif" lazyload> 那我们该如何用c/c++写一个cgi来做后台，在背后来操作这个数据呢！ 首先，我们需要写一个html。</p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<h1>表单提交</h1>  
+<form action="/cgi-bin/cmd.cgi" method="post" id=CGI>   
+    输入命令：
+    <input type="text" name="textlist"/> 
+    <input type="submit" value="OK"/>
+</form> 
+</body>
+</html>
+
+<p>运行效果如图： <img src="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151341-300x134.png" srcset="/img/loading.gif" lazyload> 最后就是重点了！ 像上面写的cgi一样！ 写一个下面这样的代码：</p>
+<p>#define  _CRT_SECURE_NO_WARNINGS<br>#include&lt;stdio.h&gt;<br>#include&lt;stdlib.h&gt;<br>//#include<stdexcept><br>#include&lt;windows.h&gt;</p>
+<p>//以调用System为举例<br>void func(char ps []) {<br>    // ps 为cmd命令<br>    char *pl = strchr(ps,’=’);  //pl指向当前的位置<br>    if(pl!=NULL)   ps = ps + (pl-ps+1);<br>     printf(“命令cmd = %s\n”, ps);<br>    char cmd[256] = {‘\0’};<br>    char  filename[]  = “Tcmd.txt”;   //暂定放置于当前目录。<br>    sprintf(cmd,”%s &gt; %s “,ps,filename);  //将ps的内容写入cmd中<br>    //生成了一条指令<br>    //无论是否执行成功，都会生成一个Tcmd.txt文件<br>    FILE *fp = NULL;<br>    int tag=system(cmd);<br>    if (tag == 1) {<br>        printf(“命令格式错误！，请重新输入： “);<br>        goto loop;<br>    }<br>    if ((fp = fopen(filename, “r”)) == NULL) {<br>        printf(“没有发现文件！”);<br>        goto loop ;<br>     }</p>
+<pre><code> while (!feof(fp)) &#123;
+     char str=fgetc(fp);
+      if (str == &#39;\\n&#39;) printf(&quot;&lt;br&gt;&lt;br&gt;\\n\\n&quot;);
+      else if (str == &#39; &#39;)printf(&quot;&amp;nbsp;&quot;);
+      else
+          printf(&quot;%c&quot;,str);
+ &#125;
+</code></pre>
+<p> loop:<br>     if (fp != NULL){<br>         fclose(fp);<br>         //并删除备份的文件<br>         system(“del Tcmd.txt”);<br>     }<br>     return ;<br>}</p>
+<p>int main(int args ,char * argv []) {</p>
+<pre><code>printf(&quot;Content-type:text/html\\n\\n&quot;);
+//打印环境变量
+printf(&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;%s&lt;br&gt;&lt;br&gt;&quot;, getenv(&quot;QUERY\_STRING&quot;));
+char szPost\[256\] = &#123;&#39;\\0&#39;&#125;;
+gets(szPost);  //获取输入    
+if ( strlen(szPost) &lt; 1 )
+    strcpy( szPost , &quot;ipconfig&quot; );
+func(szPost);
+getchar();
+</code></pre>
+<p>  return 0;<br>}</p>
+<p>编译之后，形成cmd.exe，将cmd.exe属性改为cmd.cgi文件，放置到cgi-bin目录中，当然，如果有服务器，之间放到服务器中就可以看！ 然后打开浏览器就能访问了，在输入框里输入cmd命令再点击ok就能预览效果了。 <img src="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151743-270x300.png" srcset="/img/loading.gif" lazyload> <img src="https://www.zhchi.me/wp-content/uploads/2017/12/QQ%E6%88%AA%E5%9B%BE20171201151804-222x300.png" srcset="/img/loading.gif" lazyload> CGI是一种标准，并不限定语言。所以Java、PHP、Python都可以通过这种方式来生成动态网页。但是实际上这些动态语言却很少这样用。原来是CGI有一大硬伤。那就是每次CGI请求，那么Apache都有启动一个进程去执行这个CGI程序，即颇具Unix特色的fork-and-execute。当用户请求量大的时候，这个fork-and-execute的操作会严重拖慢Server的进程。而Java的Servlet技术则是一种常驻内存的技术，不会频繁的发生进程上下文的创建和销毁操作。 时势造英雄，FastCGI技术应运而生。简单来说，其本质就是一个常驻内存的进程池技术，由调度器负责将传递过来的CGI请求发送给处理CGI的handler进程来处理。在一个请求处理完成之后，该处理进程不销毁，继续等待下一个请求的到来。FCGI技术一出，CGI又一定程度上焕发了第二春。PHP-FPM本身是使PHP支持FCGI技术的一个Patch，现在已经被纳入PHP标准。当然，支持C++的FCGI技术也出现了，Apache有FCGI的模块可以安装，比如mod_fcgid。 前面我们知道，CGI可以直接返回一个html网页。CGI程序本身也可以进行各种计算、逻辑处理任务。随着各类web前后端技术的发展，以及大数据、高并发的Server使用场景越来越多。现代的CGI的用法，在发生变化。 现在，越来越多的任务从后端转移到前端，前端页面利用丰富的Js技术来进行更多的处理。 JS可以使用Ajax技术来向后台CGI发起数据请求。Ajax完成的是不需要刷新整个页面就可以加载后端数据（比如从数据库中取出）。 CGI一般不再用于直接返回html页面，同时将复杂的计算、IO任务下沉到后端（后端可以进一步进行路由转发，实现负载均衡）。使CGI作为前后端之间的中间层。彼时CGI的职能是完成基本的数据交换：解析前端数据请求，再转发给对应后端；然后从后端取回数据，给前端返回XML或JSON。 前端JS利用XML/JSON中的数据来进行填充，绘制出丰富的页面。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">我的博客</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/12/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据库分页查询的几种方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/23/css3%E7%BB%98%E5%88%B6%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2/">
+                        <span class="hidden-mobile">css3绘制基本图形</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

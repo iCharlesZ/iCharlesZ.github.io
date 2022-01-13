@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在本文中我们将专注于学习使用 SVG 过滤器来获得惊人的效果，我们不需要通过算法深入研究幕后发生的事情，就像艺术家不需要知道油漆的分子结构来渲染令人惊叹的风景一样。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 css 和 svg 绘制一朵“真实”的云">
+<meta property="og:url" content="http://example.com/2019/07/02/%E7%94%A8css%E5%92%8Csvg%E7%BB%98%E5%88%B6%E4%B8%80%E6%9C%B5%E7%9C%9F%E5%AE%9E%E7%9A%84%E4%BA%91/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="在本文中我们将专注于学习使用 SVG 过滤器来获得惊人的效果，我们不需要通过算法深入研究幕后发生的事情，就像艺术家不需要知道油漆的分子结构来渲染令人惊叹的风景一样。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/blog/css-svg-cloud.png">
+<meta property="article:published_time" content="2019-07-02T10:28:50.000Z">
+<meta property="article:modified_time" content="2022-01-13T07:34:16.913Z">
+<meta property="article:author" content="Charles Zhang">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="SVG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/blog/css-svg-cloud.png">
+  
+  
+  <title>用 css 和 svg 绘制一朵“真实”的云 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="用 css 和 svg 绘制一朵“真实”的云">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-07-02 18:28" pubdate>
+        2019年7月2日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">用 css 和 svg 绘制一朵“真实”的云</h1>
+            
+            <div class="markdown-body">
+              <h1 id="用-css-和-svg-绘制一朵“真实”的云"><a href="#用-css-和-svg-绘制一朵“真实”的云" class="headerlink" title="用 css 和 svg 绘制一朵“真实”的云"></a>用 css 和 svg 绘制一朵“真实”的云</h1><p><strong>本文根据文章 <a target="_blank" rel="noopener" href="https://css-tricks.com/drawing-realistic-clouds-with-svg-and-css/">Drawing Realistic Clouds with SVG and CSS</a>，仅记录自己学习过程。</strong></p>
+<h3 id="最终实现效果："><a href="#最终实现效果：" class="headerlink" title="最终实现效果："></a>最终实现效果：</h3><p><img src="/img/blog/css-svg-cloud.png" srcset="/img/loading.gif" lazyload></p>
+<p>首先，CSS的box-shadow属性有五个值：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs CSS"><span class="hljs-attribute">box-shadow</span>: &lt;offsetX&gt; &lt;offsetY&gt; &lt;blurRadius&gt; &lt;spreadRadius&gt; &lt;color&gt;;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>h-shadow</td>
+<td>必需。水平阴影的位置。允许负值。</td>
+</tr>
+<tr>
+<td>v-shadow</td>
+<td>必需。垂直阴影的位置。允许负值。</td>
+</tr>
+<tr>
+<td>blur</td>
+<td>可选。模糊距离。</td>
+</tr>
+<tr>
+<td>spread</td>
+<td>可选。阴影的尺寸。</td>
+</tr>
+<tr>
+<td>color</td>
+<td>可选。阴影的颜色。</td>
+</tr>
+<tr>
+<td>inset</td>
+<td>可选。将外部阴影 (outset) 改为内部阴影。</td>
+</tr>
+</tbody></table>
+<p>我们把这些值调高，就会得到类似影子木偶的效果：</p>
+<p><img src="/img/blog/css-svg-cloud-demo1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/blog/css-svg-cloud-demo2.png" srcset="/img/loading.gif" lazyload></p>
+<p>就像一只手改变形状可以改变投影一样，我们改变HTML的“源形状”也可以使渲染在浏览器中的投影变形。<code>box-shadow</code>复制了原始尺寸和<code>border-radius</code>上的“渐变”特性，SVG过滤器则同时应用于元素及其阴影。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">filter</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;filter&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feTurbulence</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;fractalNoise&quot;</span> <span class="hljs-attr">baseFrequency</span>=<span class="hljs-string">&quot;.01&quot;</span> <span class="hljs-attr">numOctaves</span>=<span class="hljs-string">&quot;10&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feDisplacementMap</span> <span class="hljs-attr">in</span>=<span class="hljs-string">&quot;SourceGraphic&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;10&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是我们目前的SVG代码，它不会被渲染，因为我们还没有定义任何可见的东西。它唯一的目的就是保存我们为<code>SourceGraphic</code>（也就是我们的<code>&lt;div&gt;</code>）提供的过滤器。</p>
+<p>借助SVG过滤器的ID，通过添加CSS规则将HTML元素 #cloud-circle 和SVG过滤器进行关联：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs CSS"><span class="hljs-selector-id">#cloud-circle</span> &#123;<br>  <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">#filter</span>);<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">200px</span> <span class="hljs-number">200px</span> <span class="hljs-number">50px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>差不多就是这样：</strong></p>
+<p><img src="/img/blog/css-svg-cloud-demo3.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="尝试使用feDisplacementMap的scale属性"><a href="#尝试使用feDisplacementMap的scale属性" class="headerlink" title="尝试使用feDisplacementMap的scale属性"></a>尝试使用feDisplacementMap的scale属性</h2><p>使用这一属性进行一些非科学试验可以产生显著的效果。现在，我们保持<code>feTurbulence</code>的值不变，简单调整<code>feDisplacementMap</code>的<code>scale</code>属性值。</p>
+<p>随着<code>scale</code>的增加（以30为增量），我们的源<code>&lt;div&gt;</code>变得扭曲，投射的阴影反应出天空中云出现的随机形式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">feDisplacementMap</span> <span class="hljs-attr">in</span>=<span class="hljs-string">&quot;SourceGraphic&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;180&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/blog/css-svg-cloud-demo4.png" srcset="/img/loading.gif" lazyload></p>
+<p>好了，我们有进展了！让我们稍微改变颜色，以形成更具说服力的云。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs CSS"><span class="hljs-selector-tag">body</span> &#123;<br>  <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">165deg</span>, <span class="hljs-number">#527785</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#7FB4C7</span> <span class="hljs-number">100%</span>);<br>&#125;<br><br><span class="hljs-selector-id">#cloud-circle</span> &#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">180px</span>;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">180px</span>;<br>  <span class="hljs-attribute">background</span>: <span class="hljs-number">#000</span>;<br>  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;<br>  <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">#filter</span>);<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">200px</span> <span class="hljs-number">200px</span> <span class="hljs-number">50px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/blog/css-svg-cloud-demo5.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="修改box-shadow的模糊度"><a href="#修改box-shadow的模糊度" class="headerlink" title="修改box-shadow的模糊度"></a>修改box-shadow的模糊度</h2><p>下面一套图片展示了<code>box-shadow</code>属性的模糊度作用的效果，这里，我们以10px递增模糊值：</p>
+<p><img src="/img/blog/css-svg-cloud-demo6.png" srcset="/img/loading.gif" lazyload></p>
+<center style="font-size:14px;color:#C0C0C0;">随着模糊值增加，云朵也变得更加柔和。</center>
+<br>
+
+<p>为了增加一点积云的效果，我们可以稍微扩宽源<code>&lt;div&gt;</code>的宽度：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs CSS"><span class="hljs-selector-id">#cloud-circle</span> &#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span>; <br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">275px</span>;<br>  <span class="hljs-attribute">background</span>: <span class="hljs-number">#000</span>;<br>  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;<br>  <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">#filter</span>);<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">200px</span> <span class="hljs-number">200px</span> <span class="hljs-number">60px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/blog/css-svg-cloud-demo7.png" srcset="/img/loading.gif" lazyload></p>
+<p>等等，我们扩宽了源元素的宽度，但它现在遮挡在我们云层（白色阴影）的上方。让我们在更远的位置重新投影，这样我们的云就不会再被源图像遮挡了（你可以想象成把你的手往远离墙的方向移动，这样它就不会挡住你的影子木偶的视线了）。</p>
+<p>这点我们通过CSS定位可以很好地实现。<code>&lt;body&gt;</code>是父元素，默认是静态定位的，我们给源<code>&lt;div&gt;</code>添加绝对定位。最初地，这也会重新定位我们的阴影，因此我们还需要增加阴影和元素之间的距离。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs CSS"><span class="hljs-selector-id">#cloud-circle</span> &#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span>;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">275px</span>;<br>  <span class="hljs-attribute">background</span>: <span class="hljs-number">#000</span>;<br>  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;<br>  <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">#filter</span>);<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">400px</span> <span class="hljs-number">400px</span> <span class="hljs-number">60px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#fff</span>; <span class="hljs-comment">/* 增加投影位移 */</span><br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">top</span>: -<span class="hljs-number">320px</span>;<br>  <span class="hljs-attribute">left</span>: -<span class="hljs-number">320px</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在我们已经实现了一个极具说服力的云</p>
+<p><img src="/img/blog/css-svg-cloud-demo8.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="通过层次传达深度"><a href="#通过层次传达深度" class="headerlink" title="通过层次传达深度"></a>通过层次传达深度</h2><p>这是我们想要的效果：</p>
+<p><img src="/img/blog/css-svg-cloud-demo9.png" srcset="/img/loading.gif" lazyload></p>
+<p>从这张照片中云层的深度、纹理和丰富性来看，宙斯一定是读过艺术专业的。至少，他一定读过《通用设计法则》，这本书阐述了一个强大而又普通的概念：<code>照明偏差在深度和自然度的解释中起着重要作用，设计师可以通过多种方式操纵照明偏差，利用明暗区域之间的对比度来改变深度的外观。</code></p>
+<p>这段话给了我们一个提示，我们可以将不同形状、大小和颜色的图层堆叠在一起，可以实现像参考图片中那样具有高保真度的云。我们要做的也只是多次调用SVG过滤器。</p>
+<p><img src="/img/blog/css-svg-cloud-demo10.png" srcset="/img/loading.gif" lazyload></p>
+<p> 使用三个SVG过滤器绘制前中后三朵云：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 后层 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">filter</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;filter-back&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feTurbulence</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;fractalNoise&quot;</span> <span class="hljs-attr">baseFrequency</span>=<span class="hljs-string">&quot;0.012&quot;</span> <span class="hljs-attr">numOctaves</span>=<span class="hljs-string">&quot;4&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feDisplacementMap</span>  <span class="hljs-attr">in</span>=<span class="hljs-string">&quot;SourceGraphic&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;170&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 中层 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">filter</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;filter-mid&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feTurbulence</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;fractalNoise&quot;</span> <span class="hljs-attr">baseFrequency</span>=<span class="hljs-string">&quot;0.012&quot;</span> <span class="hljs-attr">numOctaves</span>=<span class="hljs-string">&quot;2&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feDisplacementMap</span>  <span class="hljs-attr">in</span>=<span class="hljs-string">&quot;SourceGraphic&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;150&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 前层 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">filter</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;filter-front&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feTurbulence</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;fractalNoise&quot;</span> <span class="hljs-attr">baseFrequency</span>=<span class="hljs-string">&quot;0.012&quot;</span> <span class="hljs-attr">numOctaves</span>=<span class="hljs-string">&quot;2&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feDisplacementMap</span>  <span class="hljs-attr">in</span>=<span class="hljs-string">&quot;SourceGraphic&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;100&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>通过分层的应用，我们有机会去探索feTurbulence并认识它的多样性。我们选择了较为平滑的类型：fractalNoise，对于numOctaves的值最高只调到了6。</p>
+<p>上面这些意味着什么？我们来看一下baseFrequency这个属性，下面几张图片是不同baseFrequency值下的效果。</p>
+<p><img src="/img/blog/css-svg-cloud-demo11.png" srcset="/img/loading.gif" lazyload></p>
+<center style="font-size:14px;color:#C0C0C0;">值越低，图像就越圆，越模糊。</center>
+<br>
+
+<p>从效果看，介于0.005~0.01的值比较符合我们想要的积云效果。</p>
+<h2 id="用numOctaves添加细节。"><a href="#用numOctaves添加细节。" class="headerlink" title="用numOctaves添加细节。"></a>用numOctaves添加细节。</h2><p>增加numOctaves值允许我们以更细的粒度去渲染图像，这个过程需要大量的计算，因此需要注意：高值会严重影响性能。</p>
+<p><img src="/img/blog/css-svg-cloud-demo12.png" srcset="/img/loading.gif" lazyload></p>
+<center style="font-size:14px;color:#C0C0C0;">numOctaves的值设置得越高，云的效果就越精细。</center>
+<br>
+
+<p>我们不需要为达到精细的效果而设置太高的值，介于4~5就够了。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.zhchi.me/amazing-css/cloud-css/index.html">最后的效果 </a> </p>
+<p><img src="/img/blog/css-svg-cloud.png" srcset="/img/loading.gif" lazyload></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/CSS/">CSS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SVG/">SVG</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/08/22/js-%E8%AF%AD%E6%B3%95%E3%80%8C%E5%8F%AF%E9%80%89%E9%93%BE%E3%80%8D%E3%80%8C%E5%8F%8C%E9%97%AE%E5%8F%B7%E3%80%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JS 语法「可选链」「双问号」</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/22/%E5%BD%93positionfixed%E9%81%87%E4%B8%8Atransform-translate/">
+                        <span class="hidden-mobile">当position：fixed 遇上transform：translate</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

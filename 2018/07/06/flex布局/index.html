@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Flexbox 布局（也叫Flex布局，弹性盒子布局）模块目标在于提供一个更有效地布局、对齐方式，并且能够使父元素在子元素的大小未知或动态变化情况下仍然能够分配好子元素之间的间隙。 Flex布局的主要思想是使父元素能够调节子元素的高度、宽度和排布的顺序，从而能够最好地适应可用布局空间（能够适应不同的设备和不同大小的屏幕）。设定为flex布局的父元素（容器）能够放大子元素使之尽可能填充可用空间，也可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flex布局">
+<meta property="og:url" content="http://example.com/2018/07/06/flex%E5%B8%83%E5%B1%80/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="Flexbox 布局（也叫Flex布局，弹性盒子布局）模块目标在于提供一个更有效地布局、对齐方式，并且能够使父元素在子元素的大小未知或动态变化情况下仍然能够分配好子元素之间的间隙。 Flex布局的主要思想是使父元素能够调节子元素的高度、宽度和排布的顺序，从而能够最好地适应可用布局空间（能够适应不同的设备和不同大小的屏幕）。设定为flex布局的父元素（容器）能够放大子元素使之尽可能填充可用空间，也可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/flexbox-300x128.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/flex-direction-300x83.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/flex-wrap-300x105.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/justify-content-263x300.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/align-items-248x300.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/align-content-248x300.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/order-300x191.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/flex-grow-300x65.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/rel-vs-abs-flex-300x151.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/align-self-300x153.png">
+<meta property="og:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/browser-support-300x66.png">
+<meta property="article:published_time" content="2018-07-06T11:27:00.000Z">
+<meta property="article:modified_time" content="2022-01-12T05:40:37.179Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.zhchi.me/wp-content/uploads/2018/07/flexbox-300x128.png">
+  
+  
+  <title>Flex布局 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Flex布局">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-07-06 19:27" pubdate>
+        2018年7月6日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      58 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flex布局</h1>
+            
+            <div class="markdown-body">
+              <p>Flexbox 布局（也叫Flex布局，弹性盒子布局）模块目标在于提供一个更有效地布局、对齐方式，并且能够使父元素在子元素的大小未知或动态变化情况下仍然能够分配好子元素之间的间隙。 Flex布局的主要思想是使父元素能够调节子元素的高度、宽度和排布的顺序，从而能够最好地适应可用布局空间（能够适应不同的设备和不同大小的屏幕）。设定为flex布局的父元素（容器）能够放大子元素使之尽可能填充可用空间，也可以收缩子元素使之不溢出。 最重要的是，与传统布局中块状元素按照垂直方向摆放，行内元素按照水平方向摆放相比，flex布局是无方向的。传统布局在应对大型复杂的布局时缺乏灵活性，特别是在改变方向、改变大小、伸展、收缩等等方面。</p>
+<span id="more"></span>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>Flex布局是一个完整的模块而不是一个单独的属性，它包括了完整的一套属性。其中有的属性是设置在容器（container，也可以叫做父元素，称为<code>flex container</code>）上，有的则是设置在容器的项目上（item，也可以叫做子元素，称为<code>flex items</code>）上。 如果我们可以说传统布局是建立在块状元素垂直流和行内元素水平流上的，那么flex布局就是建立在”flex-flow方向”上的，通过下图解释flex布局的主要思想。 <img src="https://www.zhchi.me/wp-content/uploads/2018/07/flexbox-300x128.png" srcset="/img/loading.gif" lazyload> 在flex布局中，子元素要么按照主轴也就是<code>main axis</code>（从<code>main-start</code>到<code>main-end</code>）排布，要么按照交叉轴，也就是<code>cross axis</code>(从<code>cross-start</code>到<code>cross-end</code>)排布。 下面介绍几个概念：</p>
+<ul>
+<li>  __main axis__: Flex 父元素的主轴是指子元素布局的主要方向轴，注意主轴不一定是水平的，它由属性<code>flex-direction</code>来确定主轴是水平还是垂直的（后面会介绍）。</li>
+<li>  __main-startmain-end__: 分别表示主轴的开始和结束，子元素在父元素中会沿着主轴从<code>main-start</code>到<code>main-end</code>排布。</li>
+<li>  __main size__: 单个项目占据主轴的长度大小。</li>
+<li>  __cross axis__: 交叉轴，与主轴垂直。</li>
+<li>  __cross-startcross-end__: 分别表示交叉轴的开始和结束。子元素在交叉轴的排布从<code>cross-start</code>开始到<code>cross-end</code>。</li>
+<li>__cross size__: 子元素在交叉轴方向上的大小。<h2 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h2>  属性分作用于父元素的属性和作用于子元素的属性两部分介绍。<h3 id="父元素属性"><a href="#父元素属性" class="headerlink" title="父元素属性"></a>父元素属性</h3><h4 id="display"><a href="#display" class="headerlink" title="display"></a>display</h4>  用来定义父元素是一个 flex布局容器。如果设置为<code>flex</code>则父元素为块状元素，设置为<code>inline-flex</code>父元素呈现为行内元素。  .container {<pre><code>display: flex; /\* or inline-flex \*/
+</code></pre>
+  }<h4 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h4></li>
+</ul>
+<p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/flex-direction-300x83.png" srcset="/img/loading.gif" lazyload> <code>flex-direction</code>定义flex布局的主轴方向。flex布局是单方向布局，子元素主要沿着水平行或者垂直列布局。</p>
+<p>.container {<br>  flex-direction: row  row-reverse  column  column-reverse;<br>}</p>
+<ul>
+<li>  <code>row</code>: 行方向，<code>flex-direction</code>的默认值，在<code>ltr</code>(left to right， 从左到右)排版方式下从左到右排列，在<code>rtl</code>(right to left， 从右到左)排版方式下从右到左排列。</li>
+<li>  <code>row-reverse</code>: 行反方向，在<code>ltr</code>中从右向左，在<code>rtl</code>中从左到右。</li>
+<li>  <code>column</code>: 列方向，与<code>row</code>相似，只是从上到下。</li>
+<li>  <code>column-reverse</code>: 列反方向，与<code>row-reverse</code>相似，只是从下岛上。</li>
+</ul>
+<h4 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://www.zhchi.me/wp-content/uploads/2018/07/flex-wrap-300x105.png" srcset="/img/loading.gif" lazyload></h4><p>默认情况下，flex布局中父元素会把子元素尽可能地排在同一行，通过设置<code>flex-wrap</code>来决定是否允许子元素这行排列。</p>
+<p>.container{<br>  flex-wrap: nowrap  wrap  wrap-reverse;<br>}</p>
+<ul>
+<li>  <code>nowrap</code>: 不折行，默认值，所有的子元素会排在一行。</li>
+<li>  <code>wrap</code>: 折行，子元素会从上到下根据需求折成多行。</li>
+<li>  <code>wrap-reverse</code>: 从下向上折行，子元素会从下岛上根据需求折成多行。</li>
+</ul>
+<h4 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h4><p><code>flex-flow</code>是<code>flex-direction</code>和<code>flex-wrap</code>属性的缩写形式。默认值是<code>row,nowrap</code>。</p>
+<p>flex-flow: &lt;‘flex-direction’&gt;  &lt;‘flex-wrap’&gt;</p>
+<h4 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h4><p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/justify-content-263x300.png" srcset="/img/loading.gif" lazyload> <code>justify-content</code>属性定义了子元素沿主轴方向的对齐方式，用来当子元素大小最大的时候，分配主轴上的剩余空间。也可以当子元素超出主轴的时候用来控制子元素的对齐方式。</p>
+<ul>
+<li>  <code>flex-start</code>: 默认值，朝主轴开始的方向对齐。</li>
+<li>  <code>flex-end</code>: 朝主轴结束的方向对齐。</li>
+<li>  <code>center</code>: 沿主轴方向居中。</li>
+<li>  <code>space-between</code>: 沿主轴两端对齐，第一个子元素在主轴起点，最后一个子元素在主轴终点。</li>
+<li>  <code>space-around</code>: 沿主轴子元素之间均匀分布。要注意的是子元素看起来间隙是不均匀的，第一个子元素和最后一个子元素离父元素的边缘有一个单位的间隙，但两个子元素之间有两个单位的间隙，因为每个子元素的两侧都有一个单位的间隙。</li>
+</ul>
+<p>.container {<br>  justify-content: flex-start  flex-end  center  space-between  space-around;<br>}</p>
+<h4 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h4><p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/align-items-248x300.png" srcset="/img/loading.gif" lazyload> <code>align-items</code>定义了子元素在交叉轴方向的对齐方向，这是在每个子元素仍然在其原来所在行的基础上所说的。可以看作是交叉轴上的<code>justify-content</code>属性;</p>
+<p>.container {<br>  align-items: flex-start  flex-end  center  baseline  stretch;<br>}</p>
+<ul>
+<li>  flex-start: 按照交叉轴的起点对齐。</li>
+<li>  flex-end: 按照交叉轴的终点对齐。</li>
+<li>  center: 沿交叉轴方向居中。</li>
+<li>  baseline: 按照项目的第一行文字的基线对齐。</li>
+<li>stretch: 默认值，在满足子项目所设置的<code>min-height</code>、<code>max-height</code>、<code>height</code>的情况下拉伸子元素使之填充整个父元素。<h4 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h4><h4 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://www.zhchi.me/wp-content/uploads/2018/07/align-content-248x300.png" srcset="/img/loading.gif" lazyload></h4>  <code>align-content</code>是当父元素所包含的行在交叉轴方向有空余部分时如何分配空间。与<code>justify-content</code>在主轴上如何对单个子元素对齐很相似。 <strong>注意</strong>：当只有一行的时候，该属性并不起作用。  .container {<pre><code>align-content: flex-start  flex-end  center  space-between  space-around  stretch;
+</code></pre>
+  }  该属性中的六个属性值与<code>justify-content</code>中的六个属性意思相似，不同之处在于<code>justify-content</code>沿主轴方向的作用于单个子元素，而<code>align-content</code>沿交叉轴方向作用于行。遂不再赘述各属性值含义。 注意<code>align-items</code>和<code>align-content</code>的区别，前者是指在单行内的子元素对齐方式，后者是指多行之间的对齐方式。<h4 id="父元素属性总结"><a href="#父元素属性总结" class="headerlink" title="父元素属性总结"></a>父元素属性总结</h4>  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">display</span>: flexinline-flex;<br>flex-direction: <span class="hljs-built_in">row</span>  <span class="hljs-built_in">row</span>-<span class="hljs-built_in">reverse</span>  column  column-<span class="hljs-built_in">reverse</span>;<br>flex-wrap: nowrap  wrap  wrap-<span class="hljs-built_in">reverse</span>;<br>flex-flow: &lt;‘flex-direction’&gt;  &lt;‘flex-wrap’&gt;;<br>justify-<span class="hljs-built_in">content</span>: flex-start  flex-end  <span class="hljs-built_in">center</span>  <span class="hljs-built_in">space</span>-between  <span class="hljs-built_in">space</span>-around;<br>align-items: flex-start  flex-end  <span class="hljs-built_in">center</span>  baseline  stretch;<br>align-<span class="hljs-built_in">content</span>: flex-start  flex-end  <span class="hljs-built_in">center</span>  <span class="hljs-built_in">space</span>-between  <span class="hljs-built_in">space</span>-around  stretch;<br></code></pre></td></tr></table></figure>
+<h3 id="子元素属性"><a href="#子元素属性" class="headerlink" title="子元素属性"></a>子元素属性</h3><h4 id="order"><a href="#order" class="headerlink" title="order"></a>order</h4>  <img src="https://www.zhchi.me/wp-content/uploads/2018/07/order-300x191.png" srcset="/img/loading.gif" lazyload>默认情况下，子元素按照代码书写的先后顺序布局，但<code>order</code>属性可以更改子元素出现的顺序。</li>
+</ul>
+<p>.item {<br>  order: <integer>;<br>}</p>
+<p><code>order</code>的默认值为0;子元素的<code>order</code>值越小，布局越排在前面，参考例图理解。</p>
+<h4 id="flex-grow"><a href="#flex-grow" class="headerlink" title="flex-grow"></a>flex-grow</h4><p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/flex-grow-300x65.png" srcset="/img/loading.gif" lazyload> <code>flex-grow</code>规定在空间允许的情况下，子元素如何按照比例分配可用剩余空间。如果所有的子元素的属性都设定为<code>1</code>，则父元素中的剩余空间会等分给所有子元素。如果其中某个子元素的<code>flex-grow</code>设定为2，则在分配剩余空间时该子元素将获得其他元素二倍的空间（至少会尽力获得）。</p>
+<p>.item {<br>  flex-grow: <number>; /* default 0 */<br>}</p>
+<p><strong>注</strong>：<code>flex-grow</code>不接受负值。默认值为<code>0</code>，意味着即使有剩余空间，各子元素也不会放大。</p>
+<h4 id="flex-shrink"><a href="#flex-shrink" class="headerlink" title="flex-shrink"></a>flex-shrink</h4><p>与<code>flex-grow</code>属性类似，<code>flex-shrink</code>定义了空间不足时项目的缩小比例。</p>
+<p>.item {<br>  flex-shrink: <number>; /* default 1 */<br>}</p>
+<p><strong>注</strong>： <code>flex-shrink</code>不接受负值。<code>flex-shrink</code>默认值为<code>1</code>， 当所有子元素都为默认值时，则空间不足时子元素会同比例缩小。如果其中某个子元素的<code>flex-shrink</code>值为0，则空间不足时该子元素并不会缩小。如果其中某个子元素的<code>flex-shrink</code>值为2时，则空间不足时该子元素会以二倍速度缩小。</p>
+<h4 id="flex-basis"><a href="#flex-basis" class="headerlink" title="flex-basis"></a>flex-basis</h4><p><code>flex-basis</code>定义了在计算剩余空间之前子元素默认的大小。可以设置为某个长度（e.g. 20%, 5rem, etc.）或者关键字。关键字<code>auto</code>意味着子元素会按照其本来的大小显示。关键字<code>content</code>意味着根据内容来确定大小——这个关键字到目前没有被很好地支持，所以测试起来比较困难，与<code>content</code>的类似的关键字还有<code>max-content</code>, <code>min-content</code>, <code>fit-content</code>。</p>
+<p>.item {<br>  flex-basis: <length>  auto; /* default auto */<br>}</p>
+<p>如果设置为0, 则子元素内容周围的空隙不会根据<code>flex-grow</code>按比例分配，如果设置为<code>auto</code>，则子元素周围额外的空袭会根据<code>flex-grow</code>按照比例分配，如下图：<img src="https://www.zhchi.me/wp-content/uploads/2018/07/rel-vs-abs-flex-300x151.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h4><p><code>flex</code>是<code>flex-grow</code>、<code>flex-shrink</code>、<code>flex-basis</code>三个属性的缩写。其中第二个和第三个参数(<code>flex-grow</code>,<code>flex-basis</code>)是可选的。默认值为<code>0 1 auto</code>。</p>
+<p>.item {<br>  flex: none  [ &lt;’flex-grow’&gt; &lt;’flex-shrink’&gt;?  &lt;’flex-basis’&gt; ]<br>}</p>
+<p>推荐使用缩写形式而不是单独地设置每一个属性，缩写形式中会智能地计算出相关值。</p>
+<h4 id="align-self"><a href="#align-self" class="headerlink" title="align-self"></a>align-self</h4><p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/align-self-300x153.png" srcset="/img/loading.gif" lazyload> 通过设置某个子元素的<code>align-self</code>属性，可以覆盖<code>align-items</code>所设置的对齐方式。属性值与<code>align-items</code>中的意义相同，不再赘述。</p>
+<p>.item {<br>  align-self: auto  flex-start  flex-end  center  baseline  stretch;<br>}</p>
+<p><strong>注</strong>：<code>float</code>,<code>clear</code>和<code>vertical-align</code>对flex子元素没有任何影响。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="示例一：水平垂直居中"><a href="#示例一：水平垂直居中" class="headerlink" title="示例一：水平垂直居中"></a>示例一：水平垂直居中</h3><p>我们从一个非常非常简单的例子开始，解决一个我们经常会遇到的问题：水平垂直居中。如果使用flex布局会非常简单。</p>
+<p>.parent {<br>  display: flex;<br>  height: 300px; /* 随意设定大小 */<br>}</p>
+<p>.child {<br>  width: 100px;  /* 随意设定大小，比父元素要小 */<br>  height: 100px; /* 同上 */<br>  margin: auto;  /* 见证奇迹的时刻 */<br>}</p>
+<p>这个主要原因是，在flex布局的父元素中设置<code>margin</code>为<code>auto</code>会自动吸收额外的空间，所以设置水平垂直的<code>margin</code>都为<code>auto</code>会使子元素在水平垂直方向上都完美居中。</p>
+<h3 id="示例二：响应式初体验"><a href="#示例二：响应式初体验" class="headerlink" title="示例二：响应式初体验"></a>示例二：响应式初体验</h3><p>现在我们考虑用更多的属性。考虑有6个子元素，有固定的大小，但是我们希望他们能够在改变浏览器宽度的时候仍然可以在水平轴上完美地显示（注意在不使用媒体查询的前提下）。</p>
+<p>.flex-container {<br>  /* 首先我们先创建一个flex布局上下文 */<br>  display: flex;</p>
+<p>  /* 然后我们定义flex方向和是否允许子元素换行<br>   * 注意这与以下代码等价：<br>   * flex-direction: row;<br>   * flex-wrap: wrap;<br>   */<br>  flex-flow: row wrap;</p>
+<p>  /* 然后我们定义在剩余空间上子元素如何排布 */<br>  justify-content: space-around;<br>}</p>
+<p>完成。剩下的就是一些其他样式如颜色的设置了。</p>
+<h3 id="示例三：响应式导航栏"><a href="#示例三：响应式导航栏" class="headerlink" title="示例三：响应式导航栏"></a>示例三：响应式导航栏</h3><p>让我们再尝试一些别的东西。假设我们有一个向右对齐的导航栏在我们网页的最上端，但是我们希望它在中屏上显示时为居中，在小屏上显示为单列。同样使用flex布局，实现起来会很简单。</p>
+<p>/* 大屏 */<br>.navigation {<br>  display: flex;<br>  flex-flow: row wrap;<br>  /* 这里设置对齐主轴方向的末端 */<br>  justify-content: flex-end;<br>}</p>
+<p>/* 中屏 */<br>@media all and (max-width: 800px) {<br>  .navigation {<br>    /* 当在中屏上，设置居中，并设置剩余空间环绕在子元素左右 */<br>    justify-content: space-around;<br>  }<br>}</p>
+<p>/* 小屏 */<br>@media all and (max-width: 500px) {<br>  .navigation {<br>    /* 在小屏上，我们不在使用行作为主轴，而以列为主轴 */<br>    flex-direction: column;<br>  }<br>}</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhchi.me/works/flex/">查看demo</a> 改变浏览器大小，看看布局会有什么变化吧！</p>
+<h3 id="示例四：移动优先的三栏布局"><a href="#示例四：移动优先的三栏布局" class="headerlink" title="示例四：移动优先的三栏布局"></a>示例四：移动优先的三栏布局</h3><p>我们通过灵活使用flex布局尝试一些更好玩的布局。来做一个移动优先的3列布局并带有全屏宽的header和footer。</p>
+<p>.wrapper {<br>  display: flex;<br>  flex-flow: row wrap;<br>}</p>
+<p>/* 我们要告诉所有的子元素宽度 100% */<br>.header, .main, .nav, .aside, .footer {<br>  flex: 1 100%;<br>}</p>
+<p>/* 移动优先依赖于源代码默认的渲染顺序<br> * in this case:<br> * 1. header<br> * 2. nav<br> * 3. main<br> * 4. aside<br> * 5. footer<br> */</p>
+<p>/* 中屏 */<br>@media all and (min-width: 600px) {<br>  /* 我们要告诉两边的sidebar共享一个行 */<br>  .aside { flex: 1 auto; }<br>}</p>
+<p>/* 大屏幕 */<br>@media all and (min-width: 800px) {<br>  /* 通过order设定各个面板的渲染顺序<br>   * 告诉主要面板元素占用侧栏两倍的空间<br>   */<br>  .main { flex: 2 0px; }</p>
+<p>  .aside-1 { order: 1; }<br>  .main    { order: 2; }<br>  .aside-2 { order: 3; }<br>  .footer  { order: 4; }<br>}</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhchi.me/works/flex/index2.html">查看demo</a> 改变浏览器大小，看看布局会有什么变化吧！</p>
+<h2 id="浏览器前缀"><a href="#浏览器前缀" class="headerlink" title="浏览器前缀"></a>浏览器前缀</h2><p>Flex布局需要一些浏览器前缀来最大力度地兼容大多数的浏览器。Flex布局的前缀不只是在属性前面添加浏览器前缀，不同浏览器下的属性名和属性值都不同，这是因为Flexbox布局的标准一直在变，一共有old, tweener, new 三个版本。 可能处理前缀的最好方法是使用新的语法书写CSS并通过<a target="_blank" rel="noopener" href="https://css-tricks.com/autoprefixer/">Autoprefixer</a>运行CSS，能够很好地处理这个问题。 另外，这里有一个Sass中 @mixin 来处理一些前缀，也可以给你一些处理前缀的启发：</p>
+<p>@mixin flexbox() {<br>  display: -webkit-box;<br>  display: -moz-box;<br>  display: -ms-flexbox;<br>  display: -webkit-flex;<br>  display: flex;<br>}</p>
+<p>@mixin flex($values) {<br>  -webkit-box-flex: $values;<br>  -moz-box-flex:  $values;<br>  -webkit-flex:  $values;<br>  -ms-flex:  $values;<br>  flex:  $values;<br>}</p>
+<p>@mixin order($val) {<br>  -webkit-box-ordinal-group: $val;<br>  -moz-box-ordinal-group: $val;<br>  -ms-flex-order: $val;<br>  -webkit-order: $val;<br>  order: $val;<br>}</p>
+<p>.wrapper {<br>  @include flexbox();<br>}</p>
+<p>.item {<br>  @include flex(1 200px);<br>  @include order(2);<br>}</p>
+<p> </p>
+<h2 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h2><p>首先看一下Flex布局的三个版本</p>
+<ul>
+<li>  (new)是指标准中最近的语法(e.g. <code>display:flex;</code>)。</li>
+<li>  (tweener)是指2011年以后非官方的临时版本(e.g. <code>display:flexbox;</code>)。</li>
+<li>  (old)是指2009年以后的旧语法(e.g. <code>display:box;</code>)</li>
+</ul>
+<p><img src="https://www.zhchi.me/wp-content/uploads/2018/07/browser-support-300x66.png" srcset="/img/loading.gif" lazyload> Blackberry browser 10+ 支持新语法。 更多混合使用语法达到最佳浏览器兼容，可以参考<a target="_blank" rel="noopener" href="https://css-tricks.com/using-flexbox/">this article (CSS-Tricks)</a>或者<a target="_blank" rel="noopener" href="http://dev.opera.com/articles/view/advanced-cross-browser-flexbox/#fallbacks">this article (DevOpera)</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">我的博客</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/07/12/javascript%E6%B7%B1%E5%85%A5%E4%B9%8B%E4%BB%8E%E5%8E%9F%E5%9E%8B%E5%88%B0%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaScript深入之从原型到原型链</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/07/02/vue%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E4%B8%AD%E7%9A%84%E5%9D%91%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+                        <span class="hidden-mobile">vue静态资源打包中的坑与解决方案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Charles Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="#css3-circle{width: 150px;height: 150px;border-radius: 50%;background-color: #232323;} #css3-elipse{width: 200px;height: 100px;border-radius: 50%;background-color: #232323;} #css3-triangle{width: 0;he">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css3绘制基本图形">
+<meta property="og:url" content="http://example.com/2017/11/23/css3%E7%BB%98%E5%88%B6%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2/index.html">
+<meta property="og:site_name" content="Charles&#39;s blog">
+<meta property="og:description" content="#css3-circle{width: 150px;height: 150px;border-radius: 50%;background-color: #232323;} #css3-elipse{width: 200px;height: 100px;border-radius: 50%;background-color: #232323;} #css3-triangle{width: 0;he">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-11-23T02:48:53.000Z">
+<meta property="article:modified_time" content="2022-01-12T05:40:37.136Z">
+<meta property="article:author" content="Charles Zhang">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>css3绘制基本图形 - Charles&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Charles&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/cover1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="css3绘制基本图形">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-11-23 10:48" pubdate>
+        2017年11月23日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      67 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">css3绘制基本图形</h1>
+            
+            <div class="markdown-body">
+              <p>#css3-circle{width: 150px;height: 150px;border-radius: 50%;background-color: #232323;} #css3-elipse{width: 200px;height: 100px;border-radius: 50%;background-color: #232323;} #css3-triangle{width: 0;height: 0;border-left: 100px solid transparent;border-right: 100px solid transparent;border-bottom: 150px solid #232323;} #css3-parallelogram{width: 200px;height: 100px;background: #232323;-webkit-transform: skew(-45deg);-moz-transform: skew(-45deg);-o-transform: skew(-45deg);transform: skew(-45deg);} #css3-trapezoid{width: 100px;height: 0;border-bottom: 100px solid #232323;border-left: 50px solid transparent;border-right: 50px solid transparent;} #css3-six-star{width: 0;height: 0;position: relative;border-bottom: 100px solid #232323;border-left: 50px solid transparent;border-right: 50px solid transparent;} #css3-six-star:after{content: “”;width: 0;height: 0;position: absolute;left: -50px;top: 35px;border-top: 100px solid #232323;border-left: 50px solid transparent;border-right: 50px solid transparent;} #css3-five-star{width: 0px;height: 0px;margin: 50px 0;position: relative;display: block;color: #232323;border-right: 100px solid transparent;border-bottom: 70px solid #232323;border-left:100px solid transparent;-moz-transform:rotate(35deg);-webkit-transform: rotate(35deg);-ms-transform:rotate(35deg);-o-transform:rotate(35deg);} #css3-five-star:before{border-bottom: 80px solid #232323;;border-left: 30px solid transparent;border-right: 30px solid transparent;position: absolute;height: 0;width: 0;top: -45px;left: -63px;display: block;content: ‘’;-webkit-transform: rotate(-35deg);-moz-transform:rotate(-35deg);-ms-transform:rotate(-35deg);-o-transform:rotate(-35deg);} #css3-five-star:after{position: absolute;display: block;color: #232323;top: 3px;left: -105px;width: 0px;height: 0px;border-right: 100px solid transparent;border-bottom: 70px solid #232323;border-left: 100px solid transparent;-webkit-transform: rotate(-70deg);-moz-transform:rotate(-70deg);-ms-transform:rotate(-70deg);-o-transform:rotate(-70deg);content: ‘’;} #css3-pentagon {position: relative;width: 54px;border-width: 50px 18px 0;border-style: solid; border-color: #232323 transparent;box-sizing:content-box !important;} #css3-pentagon:before {content: “”;position: absolute;height: 0;width: 0;top: -85px;left: -18px;border-width: 0 45px 35px;border-style: solid;border-color: transparent transparent #232323;box-sizing:content-box !important;} #css3-hexagon {width: 100px;height: 55px;background: #232323; position: relative;} #css3-hexagon:before {content: “”;position: absolute;top: -25px;left: 0;width: 0;height: 0;border-left: 50px solid transparent;border-right: 50px solid transparent;border-bottom: 25px solid #232323; } #css3-hexagon:after {content: “”;position: absolute;bottom: -25px;left: 0;width: 0;height: 0;border-left: 50px solid transparent;border-right: 50px solid transparent;border-top: 25px solid #232323; } #css3-heart {position: relative;width: 100px;height: 90px;} #css3-heart:before, #css3-heart:after{position: absolute;content: “”;left: 50px;top: 0;width: 50px;height: 80px;background: #232323;-moz-border-radius: 50px 50px 0 0;border-radius: 50px 50px 0 0;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);transform: rotate(-45deg);-webkit-transform-origin: 0 100%;-moz-transform-origin: 0 100%;-ms-transform-origin: 0 100%;-o-transform-origin: 0 100%;transform-origin: 0 100%;} #css3-heart:after {left: 0;-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);-ms-transform: rotate(45deg);-o-transform: rotate(45deg);transform: rotate(45deg);-webkit-transform-origin: 100% 100%;-moz-transform-origin: 100% 100%;-ms-transform-origin: 100% 100%;-o-transform-origin: 100% 100%;transform-origin :100% 100%;} #css3-gossip {width: 96px;height: 48px;background: #f1f1f1;border-color: #232323;border-style: solid;border-width: 2px 2px 50px 2px;border-radius: 100%;position: relative;box-sizing:content-box !important;} #css3-gossip:before{content: “”;position: absolute;top: 50%;left: 0;background: #f1f1f1;border: 18px solid #232323;border-radius: 100%;width: 12px;height: 12px;box-sizing:content-box !important;} #css3-gossip:after {content: “”;position: absolute;top: 50%;left: 50%;background: #232323;border: 18px solid #f1f1f1;border-radius:100%;width: 12px;height: 12px;}</p>
+<p>#css3-circle{<br>width: 150px;<br>height: 150px;<br>border-radius: 50%;<br>background-color: #232323;<br>}</p>
+<span id="more"></span>
+<p>#css3-elipse{<br>width: 200px;<br>height: 100px;<br>border-radius: 50%;<br>background-color: #232323;<br>}</p>
+<p> </p>
+<p>#css3-triangle{<br>width: 0;<br>height: 0;<br>border-left: 100px solid transparent;<br>border-right: 100px solid transparent;<br>border-bottom: 150px solid #232323;<br>}</p>
+<p> </p>
+<p>#css3-parallelogram{<br>width: 200px;<br>height: 100px;<br>background: #232323;<br>-webkit-transform: skew(-45deg);<br>-moz-transform: skew(-45deg);<br>-o-transform: skew(-45deg);<br>transform: skew(-45deg);<br>}</p>
+<p> </p>
+<p>#css3-trapezoid{<br>width: 100px;<br>height: 0;<br>border-bottom: 100px solid #232323;<br>border-left: 50px solid transparent;<br>border-right: 50px solid transparent;<br>}</p>
+<p> </p>
+<p> </p>
+<p>#css3-six-star{<br>width: 0;<br>height: 0;<br>position: relative;<br>border-bottom: 100px solid #232323;<br>border-left: 50px solid transparent;<br>border-right: 50px solid transparent;<br>}</p>
+<p>#css3-six-star:after{<br>content: “”;<br>width: 0;<br>height: 0;<br>position: absolute;<br>left: -50px;<br>top: 35px;<br>border-top: 100px solid #232323;<br>border-left: 50px solid transparent;<br>border-right: 50px solid transparent;<br>}</p>
+<p> </p>
+<p>#css3-five-star{<br>width: 0px;<br>height: 0px;<br>margin: 50px 0;<br>position: relative;<br>display: block;<br>color: #232323;<br>border-right: 100px solid transparent;<br>border-bottom: 70px  solid #232323;<br>border-left:100px solid transparent;<br>-moz-transform:rotate(35deg);<br>-webkit-transform: rotate(35deg);<br>-ms-transform:rotate(35deg);<br>-o-transform:rotate(35deg);<br>}</p>
+<p>#css3-five-star:before{<br>border-bottom: 80px solid #232323;;<br>border-left: 30px solid transparent;<br>border-right: 30px solid transparent;<br>position: absolute;<br>height: 0;<br>width: 0;<br>top: -45px;<br>left: -63px;<br>display: block;<br>content: ‘’;<br>-webkit-transform: rotate(-35deg);<br>-moz-transform:rotate(-35deg);<br>-ms-transform:rotate(-35deg);<br>-o-transform:rotate(-35deg);<br>}</p>
+<p>#css3-five-star:after{<br>position: absolute;<br>display: block;<br>color: #232323;<br>top: 3px;<br>left: -105px;<br>width: 0px;<br>height: 0px;<br>border-right: 100px solid transparent;<br>border-bottom: 70px solid #232323;<br>border-left: 100px solid transparent;<br>-webkit-transform: rotate(-70deg);<br>-moz-transform:rotate(-70deg);<br>-ms-transform:rotate(-70deg);<br>-o-transform:rotate(-70deg);<br>content: ‘’;<br>}</p>
+<p> </p>
+<p> </p>
+<p>#css3-pentagon {<br>position: relative;<br>width: 54px;<br>border-width: 50px 18px 0;<br>border-style: solid;<br>border-color: #232323 transparent;<br>}</p>
+<p>#css3-pentagon:before {<br>content: “”;<br>position: absolute;<br>height: 0;<br>width: 0;<br>top: -85px;<br>left: -18px;<br>border-width: 0 45px 35px;<br>border-style: solid;<br>border-color: transparent transparent #232323;<br>}</p>
+<p> </p>
+<p> </p>
+<p>#css3-hexagon {<br>width: 100px;<br>height: 55px;<br>background: #232323;<br>position: relative;<br>}</p>
+<p>#css3-hexagon:before {<br>content: “”;<br>position: absolute;<br>top: -25px;<br>left: 0;<br>width: 0;<br>height: 0;<br>border-left: 50px solid transparent;<br>border-right: 50px solid transparent;<br>border-bottom: 25px solid #232323;<br>}</p>
+<p>#css3-hexagon:after {<br>content: “”;<br>position: absolute;<br>bottom: -25px;<br>left: 0;<br>width: 0;<br>height: 0;<br>border-left: 50px solid transparent;<br>border-right: 50px solid transparent;<br>border-top: 25px solid #232323;<br>}</p>
+<p> </p>
+<p>#css3-heart {<br>position: relative;<br>width: 100px;<br>height: 90px;<br>}</p>
+<p>#css3-heart:before,<br>#css3-heart:after{<br>position: absolute;<br>content: “”;<br>left: 50px;<br>top: 0;<br>width: 50px;<br>height: 80px;<br>background: #232323;<br>-moz-border-radius: 50px 50px 0 0;<br>border-radius: 50px 50px 0 0;<br>-webkit-transform: rotate(-45deg);<br>-moz-transform: rotate(-45deg);<br>-ms-transform: rotate(-45deg);<br>-o-transform: rotate(-45deg);<br>transform: rotate(-45deg);<br>-webkit-transform-origin: 0 100%;<br>-moz-transform-origin: 0 100%;<br>-ms-transform-origin: 0 100%;<br>-o-transform-origin: 0 100%;<br>transform-origin: 0 100%;<br>}</p>
+<p>#css3-heart:after {<br>left: 0;<br>-webkit-transform: rotate(45deg);<br>-moz-transform: rotate(45deg);<br>-ms-transform: rotate(45deg);<br>-o-transform: rotate(45deg);<br>transform: rotate(45deg);<br>-webkit-transform-origin: 100% 100%;<br>-moz-transform-origin: 100% 100%;<br>-ms-transform-origin: 100% 100%;<br>-o-transform-origin: 100% 100%;<br>transform-origin :100% 100%;<br>} </p>
+<p> </p>
+<p>#css3-gossip {<br>width: 96px;<br>height: 48px;<br>background: #f1f1f1;<br>border-color: #232323;<br>border-style: solid;<br>border-width: 2px 2px 50px 2px;<br>border-radius: 100%;<br>position: relative;<br>}</p>
+<p>#css3-gossip:before{<br> content: “”;<br> position: absolute;<br> top: 50%;<br> left: 0;<br> background: #f1f1f1;<br> border: 18px solid #232323;<br> border-radius: 100%;<br> width: 12px;<br> height: 12px;<br>}</p>
+<p>#css3-gossip:after {<br>content: “”;<br>position: absolute;<br>top: 50%;<br>left: 50%;<br>background: #232323;<br>border: 18px solid #f1f1f1;<br>border-radius:100%;<br>width: 12px;<br>height: 12px;<br>}</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">我的博客</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/12/01/cweb%E5%AE%9E%E8%B7%B5%EF%BC%88cgi%E7%BC%96%E7%A8%8B%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C++web实践（CGI编程）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B5%8F%E8%A7%88%E5%99%A8user-agent%E6%80%BB%E6%98%AF%E6%9C%89mozilla%E5%AD%97%E6%A0%B7/">
+                        <span class="hidden-mobile">为什么浏览器User-agent总是有Mozilla字样</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
